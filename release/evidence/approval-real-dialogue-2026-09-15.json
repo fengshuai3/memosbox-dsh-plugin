@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.2",
+  "artifactSha256": "53b1f018724cba1920c60360328dadf6e0cb580f968c47f47361bc851761f31a",
+  "verifiedAt": "2026-09-15T03:35:15.078Z",
+  "kind": "realDialogue",
+  "passed": false,
+  "scope": "Three real-model synthetic document conversations with scripted approval operator; not a human UI test",
+  "humanPerformed": false,
+  "provider": "deepseek-official",
+  "model": "deepseek-flash",
+  "cases": [
+    {
+      "phase": "allow",
+      "exitCode": 0,
+      "timedOut": false,
+      "tools": [
+        "mirobody_parse_document",
+        "mirobody_preview_import",
+        "mirobody_commit_import"
+      ],
+      "approvalRequests": 4,
+      "stepCount": 4
+    },
+    {
+      "phase": "readback",
+      "exitCode": 0,
+      "timedOut": false,
+      "tools": [
+        "wiki_search",
+        "memos_search",
+        "wiki_get"
+      ],
+      "approvalRequests": 0,
+      "stepCount": 3
+    },
+    {
+      "phase": "reject-transmit",
+      "exitCode": 0,
+      "timedOut": false,
+      "tools": [
+        "mirobody_parse_document"
+      ],
+      "approvalRequests": 2,
+      "stepCount": 2
+    }
+  ],
+  "checks": {
+    "actualModelDialogues": true,
+    "fourIndependentApprovals": true,
+    "dualDestinationCommitted": true,
+    "deniedTransmissionStopped": true,
+    "memorySearchReadback": false,
+    "approvalExplanationCorrect": false
+  },
+  "findings": [
+    "MODEL_MISSTATES_SEPARATE_APPROVALS",
+    "CROSS_SESSION_MEMORY_QUERY_MISSES_COMMITTED_RECORD",
+    "OVERBROAD_NO_STORAGE_WORDING"
+  ],
+  "sourceEvidenceSha256": "77c43f4664d48fff52cd15afdca16e8a9e8f89c130e3162b8ea3e200bcc49a9b"
+}

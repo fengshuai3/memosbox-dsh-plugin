@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.3",
+  "artifactSha256": "a076ae01cd794be0fa272131c064ff842fffd1d7a097f7fa23dc14ad6dc89d2d",
+  "verifiedAt": "2026-09-15T04:13:22.406Z",
+  "kind": "automaticCapture",
+  "passed": true,
+  "humanPerformed": false,
+  "uiTested": false,
+  "scope": "Three real DSH conversations using synthetic data and capture enabled in an isolated profile. First conversation captured naturally without database preseeding, separate process recalled the random marker, different workspace did not return it. This is not proof of every conversation being captured.",
+  "checks": {
+    "naturalConversationWithoutPreseed": true,
+    "persistedTraceBeforeRecall": true,
+    "newSessionRecallsExactMarker": true,
+    "otherWorkspaceDoesNotReturnMarker": true,
+    "sourceOfRecallReviewed": true
+  },
+  "sourceEvidenceSha256": "67bcca41068df849142fdc8a86a79aa918a6935df32a430194650fcad8a3732a"
+}

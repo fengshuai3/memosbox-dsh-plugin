@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "publicationReady": false,
+  "version": "0.2.0-beta.2",
+  "artifactSha256": "53b1f018724cba1920c60360328dadf6e0cb580f968c47f47361bc851761f31a",
+  "reviewer": "",
+  "evidence": {
+    "licenses": {
+      "passed": false,
+      "path": "release/evidence/licenses-2026-09-15.json",
+      "sha256": "001965c3ea3d7c2cb7a853c18750ed063bda220c51a214dd3874a218ab0dfefe"
+    },
+    "security": null,
+    "realDialogue": {
+      "passed": false,
+      "path": "release/evidence/approval-real-dialogue-2026-09-15.json",
+      "sha256": "3c8b8e6b49d40bdeab8ef8a29f34137b3724a48659cb4eb39740a441ec9e1fb6"
+    },
+    "automaticCapture": {
+      "passed": true,
+      "path": "release/evidence/automatic-capture-2026-09-14.json",
+      "sha256": "dacfe0c79484f02ce053b7961ecc54bb3c28f2dbbb4833ad142bf09192f9392f"
+    },
+    "humanApproval": null,
+    "migrationRollback": {
+      "passed": true,
+      "path": "release/evidence/migration-rollback-2026-09-15.json",
+      "sha256": "c3478bbd8eec1d9656be9574d58d791980868087ea7bc5e52d39ee22794ae265"
+    },
+    "approvalSimulation": {
+      "passed": true,
+      "path": "release/evidence/approval-simulation-2026-09-15.json",
+      "sha256": "c34d5308c8964ff86563c05ac3f8b8ed572ed291a209952aef5fbca8c85720d8"
+    }
+  }
+}

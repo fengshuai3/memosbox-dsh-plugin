@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.3",
+  "artifactSha256": "a076ae01cd794be0fa272131c064ff842fffd1d7a097f7fa23dc14ad6dc89d2d",
+  "verifiedAt": "2026-09-15T04:13:22.406Z",
+  "kind": "approvalSimulation",
+  "passed": true,
+  "humanPerformed": false,
+  "uiTested": false,
+  "scope": "Synthetic-only installed candidate. Real DSH native approval service: eight refusal/cancellation boundaries. Real DeepSeek model dialogue: seven approval/readback/refusal scenarios with scripted approval decisions. This is not human browser acceptance.",
+  "checks": {
+    "eightNativeNegativeCases": true,
+    "separateReadModelWikiMemoryApprovals": true,
+    "noBusinessWritesWhenDenied": true,
+    "noExtractionDispatchWhenDenied": true,
+    "exactCrossSourceReadback": true,
+    "cancelDistinctFromRejectInTestedAnswer": true
+  },
+  "dialogueCases": 7,
+  "dialogueMachineChecks": 47,
+  "nativeEvidenceSha256": "0d694cc612826e7b7f9db2155ea2021630889ef37a5b8781b7e6454a509d5b1c",
+  "dialogueEvidenceSha256": "ad7f0ed513f68f81733585963ea33adc152ee67e2d685c25c31652b98fb2e19c"
+}

@@ -1,0 +1,96 @@
+name: guarded-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish the approved archive (default is verification only)'
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    outputs:
+      approved: ${{ steps.gate.outputs.approved }}
+      sha256: ${{ steps.gate.outputs.sha256 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.7.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run verify
+      - run: pnpm run audit:release
+      - run: pnpm run release:source-check
+      - name: Build candidate and report fail-closed approval status
+        id: gate
+        shell: bash
+        run: |
+          mkdir -p artifacts/release
+          npm pack --ignore-scripts --pack-destination artifacts/release
+          candidate="artifacts/release/$(node -p "const p=require('./package.json'); p.name+'-'+p.version+'.tgz'")"
+          sha256sum "$candidate" > artifacts/release/SHA256SUMS
+          echo "sha256=$(sha256sum "$candidate" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+          if node scripts/release-check.mjs --artifact "$candidate"; then
+            echo 'approved=true' >> "$GITHUB_OUTPUT"
+            echo 'Exact candidate release gates passed.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'approved=false' >> "$GITHUB_OUTPUT"
+            echo 'BLOCKED: tests/build are not publication approval. See release gate errors.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-candidate
+          path: artifacts/release/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Refuse requested publication when gates are incomplete
+        if: inputs.publish && steps.gate.outputs.approved != 'true'
+        run: exit 1
+
+  publish:
+    needs: candidate
+    if: inputs.publish && needs.candidate.outputs.approved == 'true' && startsWith(github.ref, 'refs/tags/v')
+    environment: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-candidate
+          path: artifacts/release
+      - name: Recheck archive after transfer and environment approval
+        shell: bash
+        env:
+          EXPECTED_SHA256: ${{ needs.candidate.outputs.sha256 }}
+        run: |
+          sha256sum --check artifacts/release/SHA256SUMS
+          candidate="artifacts/release/$(node -p "const p=require('./package.json'); p.name+'-'+p.version+'.tgz'")"
+          test "$(sha256sum "$candidate" | cut -d ' ' -f 1)" = "$EXPECTED_SHA256"
+          node scripts/release-check.mjs --artifact "$candidate"
+          echo "MEMOSBOX_RELEASE_ARTIFACT=$candidate" >> "$GITHUB_ENV"
+      - name: Publish the checked archive using configured npm trusted publisher
+        run: npm publish "$MEMOSBOX_RELEASE_ARTIFACT" --access public --provenance --ignore-scripts --tag beta

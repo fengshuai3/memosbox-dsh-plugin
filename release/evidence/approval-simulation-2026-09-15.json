@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.2",
+  "artifactSha256": "53b1f018724cba1920c60360328dadf6e0cb580f968c47f47361bc851761f31a",
+  "verifiedAt": "2026-09-15T03:35:15.078Z",
+  "kind": "approvalSimulation",
+  "passed": true,
+  "humanPerformed": false,
+  "uiTested": false,
+  "scope": "Synthetic fixture, real host services and installed tarball. Approval answerer and LLM adapter are test fixtures; no remote LLM, full agent loop or interactive UI qualification.",
+  "checks": {
+    "nativeApprovalService": true,
+    "allEightNegativeCases": true,
+    "noWritesWhenRejected": true,
+    "noModelDispatchWhenRejected": true,
+    "separateProcessReadback": true,
+    "ambiguousCandidateBlocked": true
+  },
+  "negativeCases": [
+    "read:rejected",
+    "read:cancelled",
+    "transmit:rejected",
+    "transmit:cancelled",
+    "wiki:rejected",
+    "wiki:cancelled",
+    "memory:rejected",
+    "memory:cancelled"
+  ],
+  "sourceEvidenceSha256": "efdb0983edc6690c4d10f55898017b55d542bab8e9146582a44630aec38a7f5d"
+}

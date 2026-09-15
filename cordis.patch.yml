@@ -1,0 +1,35 @@
+- insert:
+    - id: memosbox-native
+      name: memosbox-dsh-plugin
+      config:
+        enabled: true
+        profileId: default
+        memoryHome: ''
+        recallEnabled: true
+        captureEnabled: false
+        memoryToolsEnabled: true
+        hostLlmEnabled: false
+        viewerEnabled: false
+        viewerPort: 18801
+        recallTimeoutMs: 3000
+        memoryContextMaxChars: 6000
+        memoryToolResultMaxChars: 1200
+        memoryFailOnStartupError: false
+        wikiEnabled: true
+        wikiPath: ''
+        wikiAutoInitialize: true
+        wikiWriteEnabled: false
+        wikiSearchLimit: 8
+        wikiResultMaxChars: 1800
+        wikiMaxPageBytes: 1048576
+        wikiFailOnStartupError: false
+        dataHome: ''
+        memoryEnabled: true
+        queryLogEnabled: false
+        explicitMemoryWriteEnabled: false
+        sensitiveMode: false
+        mirobodyEnabled: true
+        mirobodyRuntimePath: ''
+        mirobodySourcePath: ''
+        mirobodySyntheticDocumentsEnabled: false
+        mirobodyModelExtractionEnabled: false

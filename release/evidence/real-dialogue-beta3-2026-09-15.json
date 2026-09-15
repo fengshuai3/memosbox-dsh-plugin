@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.3",
+  "artifactSha256": "a076ae01cd794be0fa272131c064ff842fffd1d7a097f7fa23dc14ad6dc89d2d",
+  "verifiedAt": "2026-09-15T04:13:22.406Z",
+  "kind": "realDialogue",
+  "passed": false,
+  "humanPerformed": false,
+  "uiTested": false,
+  "scope": "Ten regression, three capture and seven scripted-approval conversations with the real DeepSeek model in isolated DSH profiles. Functional machine checks pass; overall answer-quality release acceptance remains incomplete.",
+  "checks": {
+    "twentyActualModelConversations": true,
+    "functionalMachineChecks": true,
+    "approvalStageSemantics": true,
+    "allAnswersConcise": false,
+    "allPersistenceClaimsUnambiguous": false,
+    "allDomainDisclaimersRelevant": false
+  },
+  "remainingIssues": [
+    "Some regression answers exceed the target length.",
+    "Some answers say not saved without consistently limiting this to explicit business submission.",
+    "Some project answers reuse clinical-standard disclaimers; approved-import provenance is occasionally described too generically."
+  ],
+  "sourceEvidenceSha256": [
+    "ad7f0ed513f68f81733585963ea33adc152ee67e2d685c25c31652b98fb2e19c",
+    "406e9b3e35779dda33a5c1847bff3586940b17df800c75729dc945343d4081eb",
+    "67bcca41068df849142fdc8a86a79aa918a6935df32a430194650fcad8a3732a"
+  ]
+}

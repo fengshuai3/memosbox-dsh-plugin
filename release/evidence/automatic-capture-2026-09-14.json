@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.2",
+  "artifactSha256": "53b1f018724cba1920c60360328dadf6e0cb580f968c47f47361bc851761f31a",
+  "verifiedAt": "2026-09-14T08:39:56.214Z",
+  "kind": "automaticCapture",
+  "passed": true,
+  "scope": "Previously executed exact-candidate synthetic natural capture, fresh-process recall and other-workspace negative; machine checks only, not full semantic or health privacy approval. Evidence rehashed, conversations not rerun today.",
+  "checks": {
+    "exact real-model runner scope": true,
+    "no failed, timed-out, missing or empty model turns": true,
+    "every assistant message from selected real model": true,
+    "no native tool errors": true,
+    "each native tool call received a result": true,
+    "three independent capture conversations": true,
+    "capture enabled without database preseeding": true,
+    "recall prompt contains no answer marker": true,
+    "new process recalls exact naturally supplied marker": true,
+    "recall evidence contains persisted lightweight trace": true,
+    "other workspace returns no marker in answers or tool results": true
+  },
+  "sessions": 3,
+  "model": "deepseek-flash",
+  "sourceEvidenceSha256": "d1c56953f6a29c24cdc7e1b5ef6a1f40196c3a185a57286b3e441222bcb5b5f9",
+  "originalRunSha256": "7b127cc71b7faca9d5ef337787d58017647a75ea748c9ff306bc784f8d8ac9c0"
+}

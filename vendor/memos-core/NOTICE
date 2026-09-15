@@ -1,0 +1,8 @@
+Selected, tree-shaken build of @memtensor/memos-local-plugin 2.0.19 by MemTensor.
+Original algorithms are unchanged. Models, installers, viewer, and unused exports are not distributed.
+The npm package metadata declares MIT but the npm archive contains no LICENSE file.
+The exact repository tag has only the repository-root Apache-2.0 license, preserved separately.
+Public redistribution requires upstream clarification; do not represent the declaration as a verified MIT grant.
+Source: https://registry.npmjs.org/@memtensor/memos-local-plugin/-/memos-local-plugin-2.0.19.tgz
+SHA256: 0c44905fe54a9b7d66a1d5a372b021f2654d2918f9ade1b6e95a69b176dacc2d
+Repository tag: memos-local-plugin-v2.0.19 (ec8b7d956ccf3fc29345fdb3d82b5f3817578d62; recorded independently of npm output)

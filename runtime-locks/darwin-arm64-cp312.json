@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "platform": "darwin",
+  "arch": "arm64",
+  "python": "3.12",
+  "minimumMacOS": 13,
+  "mirobodyVersion": "1.4.2",
+  "bundleVersion": "loinc-2.82+2026.08.28-af2524b7a285",
+  "upstreamCommit": "33b138770cc851590be3f35f5ea596b4dcf97c13",
+  "packages": [
+    { "name": "pip", "version": "26.2.1", "filename": "pip-26.2.1-py3-none-any.whl", "size": 1816632, "sha256": "71138adf1f4ca900cdb7d289c21b7494329f2332b6d85f0e1c42108c0384ed3e", "url": "https://files.pythonhosted.org/packages/f3/6e/1736e5b4ae2b778ef2f81c47d797de9f891d4d8acb047a24ca37a60294dd/pip-26.2.1-py3-none-any.whl", "purpose": "Explicit offline provisioning installer, bootstrapped directly from this verified wheel; not a model/application dependency", "role": "provisioning-installer", "requiresPython": ">=3.10", "license": "MIT" },
+    { "name": "mirobody", "version": "1.4.2", "filename": "mirobody-1.4.2-py3-none-any.whl", "size": 26680607, "sha256": "7a075c7708dbc3995132cb6a40bebcb09ff59c268c9a99ac8bd4ddcfe7993997", "url": "https://files.pythonhosted.org/packages/ec/0c/7efc4f2c1f5fb5dd548d128b5cbef3e945d28f49fb2bde36b2a0b4e1efc0/mirobody-1.4.2-py3-none-any.whl", "purpose": "Offline resolver, units, device catalogue and reviewed document functions; no arithmetic canonicalize in the raw-preserving path", "license": "Apache-2.0; bundled terminology has separate notices" },
+    { "name": "numpy", "version": "2.5.3", "filename": "numpy-2.5.3-cp312-cp312-macosx_11_0_arm64.whl", "size": 12009327, "sha256": "f59a878c33d6b88122d80d239bb3b845d58708750b0cb06a09aebb9b18ec696c", "url": "https://files.pythonhosted.org/packages/60/39/789131c1188c078dcb3a1692e72e1e050c68b88ffe72c9ccaac9bcd7a9cd/numpy-2.5.3-cp312-cp312-macosx_11_0_arm64.whl", "purpose": "Mirobody offline index", "license": "BSD-3-Clause and wheel third-party notices" },
+    { "name": "pypdfium2", "version": "5.13.0", "filename": "pypdfium2-5.13.0-py3-none-macosx_13_0_arm64.whl", "size": 3507415, "sha256": "da5c7b74eebf40b5c1fbe1de01aa1edc8827a79fb1efd999616bc20dcaf77ba4", "url": "https://files.pythonhosted.org/packages/08/99/1fe58428b69d2722dcbcfaa08ce71834a332c5b518fd58874bcef936b823/pypdfium2-5.13.0-py3-none-macosx_13_0_arm64.whl", "purpose": "Bounded PDF text layers and physical page count", "license": "Apache-2.0 OR BSD-3-Clause; PDFium third-party licenses" },
+    { "name": "Pillow", "version": "12.3.0", "filename": "pillow-12.3.0-cp312-cp312-macosx_11_0_arm64.whl", "size": 4780323, "sha256": "ffd0c5368496f41b0944be820fcb7a838aa6e623d250b01acf2643939c3f99d7", "url": "https://files.pythonhosted.org/packages/d8/66/9a386a92561f402389a4fc70c18838bf6d35eb5eb5c6850b4b2dc64f5048/pillow-12.3.0-cp312-cp312-macosx_11_0_arm64.whl", "purpose": "Mirobody PDF extraction image dependency", "license": "MIT-CMU and wheel third-party notices" },
+    { "name": "openpyxl", "version": "3.1.5", "filename": "openpyxl-3.1.5-py2.py3-none-any.whl", "size": 250910, "sha256": "5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2", "url": "https://files.pythonhosted.org/packages/c0/da/977ded879c29cbd04de313843e76868e6e13408a94ed6b987245dc7c8506/openpyxl-3.1.5-py2.py3-none-any.whl", "purpose": "Read-only XLSX extraction preserving original cell coordinates", "license": "MIT" },
+    { "name": "et-xmlfile", "version": "2.0.0", "filename": "et_xmlfile-2.0.0-py3-none-any.whl", "size": 18059, "sha256": "7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa", "url": "https://files.pythonhosted.org/packages/c1/8b/5fe2cc11fee489817272089c4203e679c63b570a5aaeb18d852ae3cbba6a/et_xmlfile-2.0.0-py3-none-any.whl", "purpose": "openpyxl declared dependency", "license": "MIT" },
+    { "name": "defusedxml", "version": "0.7.1", "filename": "defusedxml-0.7.1-py2.py3-none-any.whl", "size": 25604, "sha256": "a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61", "url": "https://files.pythonhosted.org/packages/07/6c/aa3f2f849e01cb6a001cd8554a88d4c77c5c1a31c95bdf1cf9301e6d9ef4/defusedxml-0.7.1-py2.py3-none-any.whl", "purpose": "openpyxl XML entity expansion protection", "license": "PSF-2.0" }
+  ],
+  "runtimeDelivery": "Development beta: user-selected existing CPython 3.12; not a bundled interpreter or an all-platform release.",
+  "licensePolicy": "Retain all installed dist-info licenses and Mirobody resource NOTICE files. This manifest is an inventory, not a legal clearance or vulnerability attestation."
+}

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "publicationReady": false,
+  "version": "0.2.0-beta.3",
+  "artifactSha256": "a076ae01cd794be0fa272131c064ff842fffd1d7a097f7fa23dc14ad6dc89d2d",
+  "reviewer": "",
+  "licenseReviewStatus": "deferred-by-user-not-cleared",
+  "previousApproval": "release/history/approval-beta2-before-approval-fix-2026-09-15.json",
+  "evidence": {
+    "licenses": null,
+    "security": null,
+    "realDialogue": {
+      "passed": false,
+      "path": "release/evidence/real-dialogue-beta3-2026-09-15.json",
+      "sha256": "50c6469e2600cef8e1d66edba05533d24d6e2e2bdfbccf6f614c0229998461ee"
+    },
+    "automaticCapture": {
+      "passed": true,
+      "path": "release/evidence/automatic-capture-beta3-2026-09-15.json",
+      "sha256": "6fbeb70ffca184bc733e712fb385dc5d0dd1a919c0c4019544e6fcf403ac6e79"
+    },
+    "humanApproval": null,
+    "migrationRollback": null,
+    "approvalSimulation": {
+      "passed": true,
+      "path": "release/evidence/approval-simulation-beta3-2026-09-15.json",
+      "sha256": "f0a03aea04545f9fb84b98540bcb837d0eb2fad9a709f75532f95ad94158738a"
+    }
+  }
+}

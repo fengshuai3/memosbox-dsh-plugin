@@ -1,0 +1,985 @@
+{
+  "entry": "export { createPipeline } from \"@memtensor/memos-local-plugin/dist/core/pipeline/orchestrator.js\";\nexport { createMemoryCore } from \"@memtensor/memos-local-plugin/dist/core/pipeline/memory-core.js\";\nexport { createLlmClient } from \"@memtensor/memos-local-plugin/dist/core/llm/client.js\";\nexport { DEFAULT_CONFIG } from \"@memtensor/memos-local-plugin/dist/core/config/defaults.js\";\nexport { openDb } from \"@memtensor/memos-local-plugin/dist/core/storage/connection.js\";\nexport { runMigrations } from \"@memtensor/memos-local-plugin/dist/core/storage/migrator.js\";\nexport { makeRepos } from \"@memtensor/memos-local-plugin/dist/core/storage/repos/index.js\";\nexport { createDeepSeekHarnessBridge, extractDeepSeekHarnessLlmRoute } from \"@memtensor/memos-local-plugin/dist/adapters/deepseek-harness/bridge.js\";\nexport { createDeepSeekHarnessHostLlmBridge, DeepSeekHarnessLlmRouteContext } from \"@memtensor/memos-local-plugin/dist/adapters/deepseek-harness/host-llm.js\";",
+  "inputs": {
+    "dist/adapters/deepseek-harness/bridge.js": {
+      "bytes": 29904,
+      "bytesInOutput": 23599
+    },
+    "dist/adapters/deepseek-harness/deadline.js": {
+      "bytes": 1580,
+      "bytesInOutput": 1079
+    },
+    "dist/adapters/deepseek-harness/host-llm.js": {
+      "bytes": 12065,
+      "bytesInOutput": 9122
+    },
+    "dist/agent-contract/errors.js": {
+      "bytes": 2402,
+      "bytesInOutput": 2489
+    },
+    "dist/agent-contract/log-record.js": {
+      "bytes": 1126,
+      "bytesInOutput": 512
+    },
+    "dist/core/capture/alpha-scorer.js": {
+      "bytes": 6273,
+      "bytesInOutput": 4537
+    },
+    "dist/core/capture/batch-scorer.js": {
+      "bytes": 11685,
+      "bytesInOutput": 7272
+    },
+    "dist/core/capture/capture.js": {
+      "bytes": 56982,
+      "bytesInOutput": 42761
+    },
+    "dist/core/capture/embedder.js": {
+      "bytes": 5287,
+      "bytesInOutput": 3438
+    },
+    "dist/core/capture/error-signature.js": {
+      "bytes": 5631,
+      "bytesInOutput": 4209
+    },
+    "dist/core/capture/events.js": {
+      "bytes": 1807,
+      "bytesInOutput": 1301
+    },
+    "dist/core/capture/index.js": {
+      "bytes": 676,
+      "bytesInOutput": 0
+    },
+    "dist/core/capture/normalizer.js": {
+      "bytes": 4928,
+      "bytesInOutput": 2918
+    },
+    "dist/core/capture/reflection-extractor.js": {
+      "bytes": 2233,
+      "bytesInOutput": 1049
+    },
+    "dist/core/capture/reflection-synth.js": {
+      "bytes": 4913,
+      "bytesInOutput": 3785
+    },
+    "dist/core/capture/step-extractor.js": {
+      "bytes": 13742,
+      "bytesInOutput": 8563
+    },
+    "dist/core/capture/subscriber.js": {
+      "bytes": 2379,
+      "bytesInOutput": 1391
+    },
+    "dist/core/capture/summarizer.js": {
+      "bytes": 5891,
+      "bytesInOutput": 3599
+    },
+    "dist/core/capture/tagger.js": {
+      "bytes": 4470,
+      "bytesInOutput": 2413
+    },
+    "dist/core/config/defaults.js": {
+      "bytes": 15965,
+      "bytesInOutput": 15104
+    },
+    "dist/core/config/index.js": {
+      "bytes": 15145,
+      "bytesInOutput": 7245
+    },
+    "dist/core/config/migrations.js": {
+      "bytes": 3932,
+      "bytesInOutput": 3686
+    },
+    "dist/core/config/paths.js": {
+      "bytes": 5905,
+      "bytesInOutput": 4384
+    },
+    "dist/core/config/schema.js": {
+      "bytes": 33526,
+      "bytesInOutput": 32638
+    },
+    "dist/core/config/writer.js": {
+      "bytes": 5602,
+      "bytesInOutput": 3316
+    },
+    "dist/core/config/yaml.js": {
+      "bytes": 1843,
+      "bytesInOutput": 1418
+    },
+    "dist/core/embedding/cache.js": {
+      "bytes": 2905,
+      "bytesInOutput": 76
+    },
+    "dist/core/embedding/embedder.js": {
+      "bytes": 18696,
+      "bytesInOutput": 30
+    },
+    "dist/core/embedding/fetcher.js": {
+      "bytes": 8449,
+      "bytesInOutput": 15
+    },
+    "dist/core/embedding/index.js": {
+      "bytes": 865,
+      "bytesInOutput": 0
+    },
+    "dist/core/embedding/normalize.js": {
+      "bytes": 2627,
+      "bytesInOutput": 15
+    },
+    "dist/core/embedding/providers/cohere.js": {
+      "bytes": 1710,
+      "bytesInOutput": 15
+    },
+    "dist/core/embedding/providers/gemini.js": {
+      "bytes": 2307,
+      "bytesInOutput": 15
+    },
+    "dist/core/embedding/providers/local.js": {
+      "bytes": 4145,
+      "bytesInOutput": 0
+    },
+    "dist/core/embedding/providers/mistral.js": {
+      "bytes": 1925,
+      "bytesInOutput": 15
+    },
+    "dist/core/embedding/providers/openai.js": {
+      "bytes": 2509,
+      "bytesInOutput": 15
+    },
+    "dist/core/embedding/providers/voyage.js": {
+      "bytes": 1983,
+      "bytesInOutput": 15
+    },
+    "dist/core/embedding/retry-worker.js": {
+      "bytes": 7229,
+      "bytesInOutput": 5929
+    },
+    "dist/core/experience/feedback-builder.js": {
+      "bytes": 23103,
+      "bytesInOutput": 18678
+    },
+    "dist/core/experience/feedback-refiner.js": {
+      "bytes": 16046,
+      "bytesInOutput": 15783
+    },
+    "dist/core/feedback/classifier.js": {
+      "bytes": 9463,
+      "bytesInOutput": 6344
+    },
+    "dist/core/feedback/events.js": {
+      "bytes": 1793,
+      "bytesInOutput": 1304
+    },
+    "dist/core/feedback/evidence.js": {
+      "bytes": 4395,
+      "bytesInOutput": 2537
+    },
+    "dist/core/feedback/feedback.js": {
+      "bytes": 11091,
+      "bytesInOutput": 7506
+    },
+    "dist/core/feedback/index.js": {
+      "bytes": 1245,
+      "bytesInOutput": 0
+    },
+    "dist/core/feedback/signals.js": {
+      "bytes": 4731,
+      "bytesInOutput": 2854
+    },
+    "dist/core/feedback/subscriber.js": {
+      "bytes": 5202,
+      "bytesInOutput": 3135
+    },
+    "dist/core/feedback/synthesize.js": {
+      "bytes": 7426,
+      "bytesInOutput": 5359
+    },
+    "dist/core/hub/auth.js": {
+      "bytes": 1591,
+      "bytesInOutput": 1348
+    },
+    "dist/core/hub/client.js": {
+      "bytes": 21801,
+      "bytesInOutput": 18344
+    },
+    "dist/core/hub/runtime.js": {
+      "bytes": 10379,
+      "bytesInOutput": 8503
+    },
+    "dist/core/hub/server.js": {
+      "bytes": 26380,
+      "bytesInOutput": 22901
+    },
+    "dist/core/id.js": {
+      "bytes": 1446,
+      "bytesInOutput": 1131
+    },
+    "dist/core/injection/scheduler.js": {
+      "bytes": 1793,
+      "bytesInOutput": 1537
+    },
+    "dist/core/llm/client.js": {
+      "bytes": 31094,
+      "bytesInOutput": 20010
+    },
+    "dist/core/llm/fetcher.js": {
+      "bytes": 12454,
+      "bytesInOutput": 9221
+    },
+    "dist/core/llm/host-bridge.js": {
+      "bytes": 839,
+      "bytesInOutput": 82
+    },
+    "dist/core/llm/json-mode.js": {
+      "bytes": 5138,
+      "bytesInOutput": 3112
+    },
+    "dist/core/llm/prompts/decision-repair.js": {
+      "bytes": 1299,
+      "bytesInOutput": 1315
+    },
+    "dist/core/llm/prompts/index.js": {
+      "bytes": 3033,
+      "bytesInOutput": 1344
+    },
+    "dist/core/llm/prompts/l2-induction.js": {
+      "bytes": 4701,
+      "bytesInOutput": 4578
+    },
+    "dist/core/llm/prompts/l3-abstraction.js": {
+      "bytes": 5507,
+      "bytesInOutput": 4886
+    },
+    "dist/core/llm/prompts/reflection.js": {
+      "bytes": 8119,
+      "bytesInOutput": 7385
+    },
+    "dist/core/llm/prompts/retrieval-filter.js": {
+      "bytes": 7119,
+      "bytesInOutput": 6935
+    },
+    "dist/core/llm/prompts/reward.js": {
+      "bytes": 4413,
+      "bytesInOutput": 3932
+    },
+    "dist/core/llm/prompts/skill-crystallize.js": {
+      "bytes": 3751,
+      "bytesInOutput": 3286
+    },
+    "dist/core/llm/providers/anthropic.js": {
+      "bytes": 6147,
+      "bytesInOutput": 4658
+    },
+    "dist/core/llm/providers/bedrock.js": {
+      "bytes": 3519,
+      "bytesInOutput": 2370
+    },
+    "dist/core/llm/providers/gemini.js": {
+      "bytes": 5377,
+      "bytesInOutput": 4260
+    },
+    "dist/core/llm/providers/host.js": {
+      "bytes": 1770,
+      "bytesInOutput": 1038
+    },
+    "dist/core/llm/providers/local-only.js": {
+      "bytes": 771,
+      "bytesInOutput": 258
+    },
+    "dist/core/llm/providers/openai.js": {
+      "bytes": 7667,
+      "bytesInOutput": 5816
+    },
+    "dist/core/llm/refusal.js": {
+      "bytes": 2305,
+      "bytesInOutput": 1888
+    },
+    "dist/core/logger/context.js": {
+      "bytes": 1525,
+      "bytesInOutput": 532
+    },
+    "dist/core/logger/format/compact.js": {
+      "bytes": 1299,
+      "bytesInOutput": 1254
+    },
+    "dist/core/logger/format/json.js": {
+      "bytes": 906,
+      "bytesInOutput": 831
+    },
+    "dist/core/logger/format/pretty.js": {
+      "bytes": 2588,
+      "bytesInOutput": 2432
+    },
+    "dist/core/logger/index.js": {
+      "bytes": 13323,
+      "bytesInOutput": 6403
+    },
+    "dist/core/logger/levels.js": {
+      "bytes": 1470,
+      "bytesInOutput": 830
+    },
+    "dist/core/logger/redact.js": {
+      "bytes": 5125,
+      "bytesInOutput": 4689
+    },
+    "dist/core/logger/sinks/app-log.js": {
+      "bytes": 1018,
+      "bytesInOutput": 893
+    },
+    "dist/core/logger/sinks/audit-log.js": {
+      "bytes": 792,
+      "bytesInOutput": 264
+    },
+    "dist/core/logger/sinks/error-log.js": {
+      "bytes": 797,
+      "bytesInOutput": 900
+    },
+    "dist/core/logger/sinks/events-log.js": {
+      "bytes": 728,
+      "bytesInOutput": 266
+    },
+    "dist/core/logger/sinks/llm-log.js": {
+      "bytes": 770,
+      "bytesInOutput": 260
+    },
+    "dist/core/logger/sinks/perf-log.js": {
+      "bytes": 819,
+      "bytesInOutput": 262
+    },
+    "dist/core/logger/timer.js": {
+      "bytes": 914,
+      "bytesInOutput": 745
+    },
+    "dist/core/logger/transports/console.js": {
+      "bytes": 1233,
+      "bytesInOutput": 1182
+    },
+    "dist/core/logger/transports/file-rotating.js": {
+      "bytes": 6020,
+      "bytesInOutput": 314
+    },
+    "dist/core/logger/transports/jsonl-events.js": {
+      "bytes": 1028,
+      "bytesInOutput": 301
+    },
+    "dist/core/logger/transports/memory-buffer.js": {
+      "bytes": 1356,
+      "bytesInOutput": 1447
+    },
+    "dist/core/logger/transports/null.js": {
+      "bytes": 273,
+      "bytesInOutput": 259
+    },
+    "dist/core/logger/transports/sse-broadcast.js": {
+      "bytes": 933,
+      "bytesInOutput": 848
+    },
+    "dist/core/memory/l2/associate.js": {
+      "bytes": 2811,
+      "bytesInOutput": 1560
+    },
+    "dist/core/memory/l2/candidate-pool.js": {
+      "bytes": 5592,
+      "bytesInOutput": 3976
+    },
+    "dist/core/memory/l2/events.js": {
+      "bytes": 1761,
+      "bytesInOutput": 1299
+    },
+    "dist/core/memory/l2/gain.js": {
+      "bytes": 6715,
+      "bytesInOutput": 2596
+    },
+    "dist/core/memory/l2/index.js": {
+      "bytes": 984,
+      "bytesInOutput": 0
+    },
+    "dist/core/memory/l2/induce.js": {
+      "bytes": 7950,
+      "bytesInOutput": 5552
+    },
+    "dist/core/memory/l2/l2.js": {
+      "bytes": 28830,
+      "bytesInOutput": 20318
+    },
+    "dist/core/memory/l2/signature.js": {
+      "bytes": 3139,
+      "bytesInOutput": 1723
+    },
+    "dist/core/memory/l2/similarity.js": {
+      "bytes": 4535,
+      "bytesInOutput": 2146
+    },
+    "dist/core/memory/l2/subscriber.js": {
+      "bytes": 5323,
+      "bytesInOutput": 3297
+    },
+    "dist/core/memory/l3/abstract.js": {
+      "bytes": 11615,
+      "bytesInOutput": 7827
+    },
+    "dist/core/memory/l3/cluster.js": {
+      "bytes": 7823,
+      "bytesInOutput": 3997
+    },
+    "dist/core/memory/l3/events.js": {
+      "bytes": 1856,
+      "bytesInOutput": 1299
+    },
+    "dist/core/memory/l3/index.js": {
+      "bytes": 833,
+      "bytesInOutput": 0
+    },
+    "dist/core/memory/l3/l3.js": {
+      "bytes": 16630,
+      "bytesInOutput": 11846
+    },
+    "dist/core/memory/l3/merge.js": {
+      "bytes": 6589,
+      "bytesInOutput": 4642
+    },
+    "dist/core/memory/l3/subscriber.js": {
+      "bytes": 6543,
+      "bytesInOutput": 3532
+    },
+    "dist/core/openrouter.js": {
+      "bytes": 846,
+      "bytesInOutput": 683
+    },
+    "dist/core/pipeline/deps.js": {
+      "bytes": 17894,
+      "bytesInOutput": 11695
+    },
+    "dist/core/pipeline/event-bridge.js": {
+      "bytes": 9605,
+      "bytesInOutput": 5842
+    },
+    "dist/core/pipeline/memory-core.js": {
+      "bytes": 229820,
+      "bytesInOutput": 152219
+    },
+    "dist/core/pipeline/orchestrator.js": {
+      "bytes": 72861,
+      "bytesInOutput": 47606
+    },
+    "dist/core/pipeline/recovery-constants.js": {
+      "bytes": 368,
+      "bytesInOutput": 75
+    },
+    "dist/core/pipeline/retrieval-log.js": {
+      "bytes": 1199,
+      "bytesInOutput": 706
+    },
+    "dist/core/pipeline/retrieval-repos.js": {
+      "bytes": 8468,
+      "bytesInOutput": 6497
+    },
+    "dist/core/retrieval/candidate-dedupe.js": {
+      "bytes": 3983,
+      "bytesInOutput": 3148
+    },
+    "dist/core/retrieval/decision-guidance.js": {
+      "bytes": 7420,
+      "bytesInOutput": 4934
+    },
+    "dist/core/retrieval/dedupe-trace-episode.js": {
+      "bytes": 2545,
+      "bytesInOutput": 2129
+    },
+    "dist/core/retrieval/events.js": {
+      "bytes": 1714,
+      "bytesInOutput": 1030
+    },
+    "dist/core/retrieval/index.js": {
+      "bytes": 473,
+      "bytesInOutput": 39
+    },
+    "dist/core/retrieval/injector.js": {
+      "bytes": 20198,
+      "bytesInOutput": 14630
+    },
+    "dist/core/retrieval/llm-filter.js": {
+      "bytes": 11540,
+      "bytesInOutput": 8322
+    },
+    "dist/core/retrieval/profile.js": {
+      "bytes": 1255,
+      "bytesInOutput": 899
+    },
+    "dist/core/retrieval/query-builder.js": {
+      "bytes": 6372,
+      "bytesInOutput": 4515
+    },
+    "dist/core/retrieval/ranker.js": {
+      "bytes": 20082,
+      "bytesInOutput": 11606
+    },
+    "dist/core/retrieval/retrieve.js": {
+      "bytes": 26756,
+      "bytesInOutput": 18922
+    },
+    "dist/core/retrieval/tier1-skill.js": {
+      "bytes": 8763,
+      "bytesInOutput": 6353
+    },
+    "dist/core/retrieval/tier2-experience.js": {
+      "bytes": 6141,
+      "bytesInOutput": 5423
+    },
+    "dist/core/retrieval/tier2-trace.js": {
+      "bytes": 20695,
+      "bytesInOutput": 14212
+    },
+    "dist/core/retrieval/tier3-world.js": {
+      "bytes": 5490,
+      "bytesInOutput": 4465
+    },
+    "dist/core/reward/backprop.js": {
+      "bytes": 3742,
+      "bytesInOutput": 2174
+    },
+    "dist/core/reward/events.js": {
+      "bytes": 1795,
+      "bytesInOutput": 1299
+    },
+    "dist/core/reward/human-scorer.js": {
+      "bytes": 7574,
+      "bytesInOutput": 4851
+    },
+    "dist/core/reward/index.js": {
+      "bytes": 406,
+      "bytesInOutput": 17
+    },
+    "dist/core/reward/reward.js": {
+      "bytes": 19270,
+      "bytesInOutput": 12682
+    },
+    "dist/core/reward/subscriber.js": {
+      "bytes": 6244,
+      "bytesInOutput": 3498
+    },
+    "dist/core/reward/task-summary.js": {
+      "bytes": 9680,
+      "bytesInOutput": 6251
+    },
+    "dist/core/runtime/namespace.js": {
+      "bytes": 6721,
+      "bytesInOutput": 5320
+    },
+    "dist/core/safety/content.js": {
+      "bytes": 2688,
+      "bytesInOutput": 2186
+    },
+    "dist/core/session/episode-manager.js": {
+      "bytes": 13266,
+      "bytesInOutput": 9770
+    },
+    "dist/core/session/events.js": {
+      "bytes": 2323,
+      "bytesInOutput": 1398
+    },
+    "dist/core/session/heuristics.js": {
+      "bytes": 5595,
+      "bytesInOutput": 3170
+    },
+    "dist/core/session/index.js": {
+      "bytes": 573,
+      "bytesInOutput": 0
+    },
+    "dist/core/session/intent-classifier.js": {
+      "bytes": 7638,
+      "bytesInOutput": 5373
+    },
+    "dist/core/session/manager.js": {
+      "bytes": 14219,
+      "bytesInOutput": 8567
+    },
+    "dist/core/session/persistence.js": {
+      "bytes": 4527,
+      "bytesInOutput": 2545
+    },
+    "dist/core/session/relation-classifier.js": {
+      "bytes": 23584,
+      "bytesInOutput": 16958
+    },
+    "dist/core/skill/crystallize.js": {
+      "bytes": 23348,
+      "bytesInOutput": 18297
+    },
+    "dist/core/skill/eligibility.js": {
+      "bytes": 3486,
+      "bytesInOutput": 2255
+    },
+    "dist/core/skill/events.js": {
+      "bytes": 1953,
+      "bytesInOutput": 1298
+    },
+    "dist/core/skill/evidence.js": {
+      "bytes": 3224,
+      "bytesInOutput": 2334
+    },
+    "dist/core/skill/index.js": {
+      "bytes": 812,
+      "bytesInOutput": 0
+    },
+    "dist/core/skill/lifecycle-worker.js": {
+      "bytes": 1852,
+      "bytesInOutput": 1342
+    },
+    "dist/core/skill/lifecycle.js": {
+      "bytes": 6260,
+      "bytesInOutput": 3699
+    },
+    "dist/core/skill/packager.js": {
+      "bytes": 7076,
+      "bytesInOutput": 5488
+    },
+    "dist/core/skill/skill.js": {
+      "bytes": 12500,
+      "bytesInOutput": 7924
+    },
+    "dist/core/skill/subscriber.js": {
+      "bytes": 8532,
+      "bytesInOutput": 6055
+    },
+    "dist/core/skill/tool-names.js": {
+      "bytes": 1095,
+      "bytesInOutput": 544
+    },
+    "dist/core/skill/verifier.js": {
+      "bytes": 4571,
+      "bytesInOutput": 3111
+    },
+    "dist/core/storage/connection.js": {
+      "bytes": 4855,
+      "bytesInOutput": 2792
+    },
+    "dist/core/storage/keyword.js": {
+      "bytes": 6979,
+      "bytesInOutput": 4186
+    },
+    "dist/core/storage/migrator.js": {
+      "bytes": 16142,
+      "bytesInOutput": 12019
+    },
+    "dist/core/storage/repos/_helpers.js": {
+      "bytes": 3484,
+      "bytesInOutput": 2202
+    },
+    "dist/core/storage/repos/api_logs.js": {
+      "bytes": 4932,
+      "bytesInOutput": 3796
+    },
+    "dist/core/storage/repos/audit.js": {
+      "bytes": 1802,
+      "bytesInOutput": 1318
+    },
+    "dist/core/storage/repos/candidate_pool.js": {
+      "bytes": 3223,
+      "bytesInOutput": 2587
+    },
+    "dist/core/storage/repos/decision_repairs.js": {
+      "bytes": 2465,
+      "bytesInOutput": 2003
+    },
+    "dist/core/storage/repos/embedding_maintenance.js": {
+      "bytes": 5874,
+      "bytesInOutput": 2600
+    },
+    "dist/core/storage/repos/embedding_retry_queue.js": {
+      "bytes": 10165,
+      "bytesInOutput": 9354
+    },
+    "dist/core/storage/repos/episodes.js": {
+      "bytes": 8988,
+      "bytesInOutput": 7001
+    },
+    "dist/core/storage/repos/feedback.js": {
+      "bytes": 3052,
+      "bytesInOutput": 2454
+    },
+    "dist/core/storage/repos/hub.js": {
+      "bytes": 16298,
+      "bytesInOutput": 14819
+    },
+    "dist/core/storage/repos/index.js": {
+      "bytes": 3272,
+      "bytesInOutput": 709
+    },
+    "dist/core/storage/repos/kv.js": {
+      "bytes": 1796,
+      "bytesInOutput": 1235
+    },
+    "dist/core/storage/repos/migrations.js": {
+      "bytes": 580,
+      "bytesInOutput": 463
+    },
+    "dist/core/storage/repos/policies.js": {
+      "bytes": 16612,
+      "bytesInOutput": 13839
+    },
+    "dist/core/storage/repos/sessions.js": {
+      "bytes": 2273,
+      "bytesInOutput": 1687
+    },
+    "dist/core/storage/repos/skill_trials.js": {
+      "bytes": 2917,
+      "bytesInOutput": 2424
+    },
+    "dist/core/storage/repos/skills.js": {
+      "bytes": 15376,
+      "bytesInOutput": 13288
+    },
+    "dist/core/storage/repos/trace-policy-links.js": {
+      "bytes": 1161,
+      "bytesInOutput": 1016
+    },
+    "dist/core/storage/repos/traces.js": {
+      "bytes": 33297,
+      "bytesInOutput": 28021
+    },
+    "dist/core/storage/repos/world_model.js": {
+      "bytes": 12091,
+      "bytesInOutput": 10311
+    },
+    "dist/core/storage/tx.js": {
+      "bytes": 4698,
+      "bytesInOutput": 764
+    },
+    "dist/core/storage/vector.js": {
+      "bytes": 9453,
+      "bytesInOutput": 4955
+    },
+    "dist/core/time.js": {
+      "bytes": 2770,
+      "bytesInOutput": 1564
+    },
+    "dist/core/util/foreground-resources.js": {
+      "bytes": 9021,
+      "bytesInOutput": 7391
+    },
+    "dist/core/util/rate-limited-llm.js": {
+      "bytes": 2279,
+      "bytesInOutput": 1852
+    },
+    "dist/core/util/request-deadline.js": {
+      "bytes": 1037,
+      "bytesInOutput": 691
+    },
+    "dist/core/util/retry-after.js": {
+      "bytes": 5244,
+      "bytesInOutput": 3611
+    },
+    "dist/core/util/semaphore.js": {
+      "bytes": 1485,
+      "bytesInOutput": 1194
+    }
+  },
+  "output": {
+    "bytes": 1174895,
+    "imports": [
+      {
+        "path": "node:events",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:crypto",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "uuid",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:async_hooks",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:os",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:fs",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:os",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:path",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "@sinclair/typebox",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "yaml",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "yaml",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:fs",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:path",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:fs",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "@sinclair/typebox",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "@sinclair/typebox/value",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:fs",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:path",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "yaml",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:crypto",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:async_hooks",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:crypto",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:crypto",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:fs",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:path",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "better-sqlite3",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:fs",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:path",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:url",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:crypto",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:os",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:crypto",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:http",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:os",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:crypto",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "@deepseek-ai/dsh-llm",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "@deepseek-ai/dsh-timeout",
+        "kind": "import-statement",
+        "external": true
+      },
+      {
+        "path": "node:async_hooks",
+        "kind": "import-statement",
+        "external": true
+      }
+    ],
+    "exports": [
+      "DEFAULT_CONFIG",
+      "DeepSeekHarnessLlmRouteContext",
+      "createDeepSeekHarnessBridge",
+      "createDeepSeekHarnessHostLlmBridge",
+      "createLlmClient",
+      "createMemoryCore",
+      "createPipeline",
+      "extractDeepSeekHarnessLlmRoute",
+      "makeRepos",
+      "openDb",
+      "runMigrations"
+    ]
+  }
+}

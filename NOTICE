@@ -1,0 +1,13 @@
+memosbox-dsh-plugin
+Copyright 2026 memOSbox contributors
+
+This development product contains selected unmodified modules from
+@memtensor/memos-local-plugin 2.0.19. Its npm metadata declares MIT, while the
+upstream repository provides a root Apache-2.0 license and no module LICENSE.
+See vendor/memos-core for original evidence and source hashes. Public
+redistribution remains gated on clarification; no replacement license is invented.
+Mirobody 1.4.2 code is Apache-2.0; terminology resources have separate terms.
+Preserve its LICENSE-3RD-PARTY and LOINC NOTICE with provisioned resources.
+No SNOMED/UMLS dataset rights are granted by this package.
+DeepSeek Harness is developed by DeepSeek AI and is used through its public plugin interfaces.
+No MemOS, DeepSeek, or Mirobody trademarks are transferred by this distribution.
