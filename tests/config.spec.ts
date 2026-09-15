@@ -22,7 +22,7 @@ describe('plugin configuration', () => {
     expect(wikiGuidance(false)).toContain('exact project/entity ID')
     expect(wikiGuidance(false)).toContain('Never disclose an unrelated')
     expect(answerGuidance()).toContain('中文提问时用简洁中文')
-    expect(answerGuidance()).toContain('不代表所有标准或历史中不存在')
+    expect(answerGuidance()).toContain('不要先用全局否定再补救')
     expect(answerGuidance()).toContain('DSH 会话历史')
     expect(answerGuidance()).toContain('单候选不等于正确')
     expect(answerGuidance()).toContain('先区分指标查询与文档导入')

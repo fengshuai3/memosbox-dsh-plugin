@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "migrationRollback",
+  "version": "0.2.0-beta.4",
+  "artifactSha256": "587f9f27ab644b1b846943a183a35e17ffdabcb026476ab263b86e2168743a82",
+  "oldArtifactSha256": "6c057a941a2af0517a0a26322c3061047150d071ecb42b25307f0e3dcfeb312e",
+  "verifiedAt": "2026-09-15T07:15:40.048Z",
+  "passed": true,
+  "scope": "One explicitly owned synthetic trace and Wiki page; no production migration or complex policy/skill mapping",
+  "oldVersion": "0.1.0-beta.2",
+  "newVersion": "0.2.0-beta.4",
+  "memosVersions": [
+    "2.0.18",
+    "2.0.19"
+  ],
+  "checks": {
+    "cliUpgrade": true,
+    "offlineSnapshotRollback": true,
+    "exactInstalledFilesVerified": true,
+    "stoppedBackupHashVerified": true,
+    "explicitOwnershipRemap": true,
+    "duplicateImportIdempotent": true,
+    "nativeDshFreshProcessReadback": true,
+    "otherWorkspaceAbsent": true,
+    "postUpgradeDataPreserved": true,
+    "oldProfileFilesRestoredExactly": true,
+    "oldCoreAndWikiReadback": true,
+    "oldDatabaseNeverOpenedByNewCode": true,
+    "formalProfilesUnmodified": true
+  },
+  "limitations": [
+    "Old plugin full boot/embedding path not exercised; old public core/wiki interfaces used offline",
+    "Old fresh registry install timed out; rollback deliberately restores installed dependency snapshot offline",
+    "Legacy policies, world models, skills, large datasets and real data require separate migration review",
+    "Formal profile switch still requires explicit historical-data ownership and a maintenance window"
+  ]
+}

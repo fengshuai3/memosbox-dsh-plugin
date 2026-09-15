@@ -1,8 +1,10 @@
 import type { Context } from '@deepseek-ai/cordis'
 import { defineTool, type ToolDefinition, type ToolRunContext } from '@deepseek-ai/dsh-tools'
 import type { WikiAdapter } from './adapter.js'
+import { explicitEntities } from './adapter.js'
 import type { WikiConfidence, WikiPageType, WikiWriteResult } from './types.js'
 import { renderWikiResult } from './result-renderer.js'
+import { READBACK_ANSWER_STYLE } from '../answer-evidence.js'
 
 type JsonValue = Parameters<ToolDefinition['output']['render']>[1]
 
@@ -69,13 +71,23 @@ export function registerWikiTools(ctx: Context, options: {
         const query = requireText(args.query, 'query')
         const limit = boundedInteger(args.limit, options.defaultLimit, 1, 50)
         exec.signal.throwIfAborted()
-        const hits = await adapter.query(query, limit, args.includeOrientation === true, options.maxResultChars)
+        let hits = await adapter.query(query, limit, args.includeOrientation === true, options.maxResultChars)
+        let importDiscovery = false
+        // Untranslated report wording may miss every English import heading.
+        // Offer only candidate metadata, only for document discovery without a
+        // named entity. Never broaden a named project's failed query.
+        if (!hits.length && canDiscoverImports(query)) {
+          hits = (await adapter.query('Reviewed Mirobody import', limit, false, options.maxResultChars))
+            .filter(hit => /^concepts\/mirobody-[a-f0-9-]{36}\.md$/.test(hit.path) && hit.title === 'Reviewed Mirobody import')
+            .map(hit => ({ ...hit, content: '', requiresPageRead: true }))
+          importDiscovery = hits.length > 0
+        }
         exec.signal.throwIfAborted()
         return toolResult(
           hits.length === 0
-            ? 'No matching project Wiki pages found.'
-            : `${hits.length} matching Wiki results.`,
-          { ok: true, hits, truncated: false, scopeNote: 'Matches are limited to this workspace and query. Empty results do not prove global absence. Confirm page identity before reading; never repeat unrelated values.' },
+            ? '当前工作区未检索到对应 Wiki 页面。'
+            : importDiscovery ? '发现本工作区的导入页候选，仅有元数据，不代表已匹配报告。单页可读取核对原文和 lookup ID；多页不能猜是哪份，应请用户明确。' : `当前工作区找到 ${hits.length} 个 Wiki 结果，请确认项目身份后读取。`,
+          { ok: true, hits, truncated: false, importDiscovery, evidenceDomain: 'workspace-wiki', answerStyle: '用一两句中文回答，不超过300字符；只说实际查到的项目证据，不列状态和哈希，也不添加词典/临床提示。', scopeNote: '仅描述当前工作区和查询。先确认页面身份；不扩大实体范围，不复述无关值。' },
         )
       },
     })))
@@ -112,6 +124,7 @@ export function registerWikiTools(ctx: Context, options: {
           nextOffset,
           totalChars: page.body.length,
           truncated: nextOffset !== null,
+          answerStyle: READBACK_ANSWER_STYLE,
         })
       },
     })))
@@ -187,6 +200,11 @@ export function registerWikiTools(ctx: Context, options: {
     throw error
   }
   return () => disposeAll(disposers)
+}
+
+export function canDiscoverImports(query: string): boolean {
+  return explicitEntities(query).length === 0 && !/(?:项目|project|客户|customer|患者|patient)/i.test(query)
+    && /(?:合成|导入|保存|import|saved|synthetic).*(?:报告|文档|report|document)|(?:报告|文档|report|document).*(?:导入|保存|import|saved)/i.test(query)
 }
 
 function requireText(value: string, name: string): string {

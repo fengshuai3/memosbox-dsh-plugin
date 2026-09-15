@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "kind": "userTestReport",
+  "reportedOn": "2026-09-15",
+  "reportedBy": "maintainer",
+  "userReportedPassed": true,
+  "publicationRequested": true,
+  "testedVersion": null,
+  "testedArtifactSha256": null,
+  "candidateVersion": "0.2.0-beta.4",
+  "candidateArtifactSha256": "587f9f27ab644b1b846943a183a35e17ffdabcb026476ab263b86e2168743a82",
+  "status": "awaiting-tested-version-and-artifact-confirmation",
+  "scope": "The maintainer reports that manual tests passed and requests project update and publication. The tested version, artifact identity and per-case UI evidence were not supplied. This report is not the artifact-bound humanApproval receipt.",
+  "observedLocalWebPreparation": {
+    "lastLaunchedVersion": "0.2.0-beta.2",
+    "mode": "chat",
+    "beta4PreparationFound": false
+  },
+  "limitations": [
+    "Local preparation records do not exclude testing in another environment.",
+    "Do not infer missing per-case results, approval clicks or artifact identity.",
+    "Security and license clearance are separate from the reported manual test."
+  ]
+}

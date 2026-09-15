@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0-beta.4 - Unreleased
+
+- Stop document parsing and commits for the rest of a DSH turn after refused, cancelled or unavailable approval; block destination downgrade and candidate retries, including after plugin reload. A later host turn requires fresh approvals.
+- Discover unscoped synthetic report imports using metadata-only matches, followed by actual page verification; named project queries never use this fallback.
+- Keep a non-certifying MemOS lookup reference in new Wiki-only imports, preserving readback after a later separately approved memory extension. Explain that a dual-destination commit requests independent grants within one call.
+- Return result-specific terminology caveats and tool-scoped business-write effects instead of repeating every disclaimer.
+- Distinguish memory import, lightweight capture, mixed labels and unverified provenance; tags are not proof of human approval.
+- Separate project search guidance from clinical mapping guidance and request short, evidence-led answers without mandatory boilerplate sections.
+- Add automated answer-quality regressions alongside real DSH dialogue verification; no release or health-data approval is implied.
+
 ## 0.2.0-beta.3 - Unreleased
 
 - Return independent source/model/Wiki/memory approval decisions and stage-specific effects; distinguish business writes from host persistence.

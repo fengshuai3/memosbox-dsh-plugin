@@ -49,7 +49,10 @@ export async function commitCandidate(options: {
         const result = await wiki.writePage({
           path: candidate.targetPath, title: 'Reviewed Mirobody import', type: 'concept',
           tags: ['wiki', 'memory'], sources: [rawPath], confidence: 'low', contested: candidate.partial,
-          body: candidateMarkdown(candidate, options.includeMemory), expectedVersion: candidate.expectedVersion, operationId: candidate.operationId,
+          // A deterministic lookup reference is NOT a claim that memory exists.
+          // Include it even for Wiki-only writes so a later approved MemOS
+          // extension remains discoverable without mutating the reviewed page.
+          body: candidateMarkdown(candidate, true), expectedVersion: candidate.expectedVersion, operationId: candidate.operationId,
         }, signal ? { signal } : {})
         receipt.wiki = result
         receipt.state = result.ok ? 'wiki_committed' : result.status === 409 ? 'conflict' : 'recovery_required'

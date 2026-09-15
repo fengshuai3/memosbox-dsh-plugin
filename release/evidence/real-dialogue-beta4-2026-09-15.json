@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.4",
+  "artifactSha256": "587f9f27ab644b1b846943a183a35e17ffdabcb026476ab263b86e2168743a82",
+  "verifiedAt": "2026-09-15T07:17:21.487Z",
+  "humanPerformed": false,
+  "uiTested": false,
+  "kind": "realDialogue",
+  "passed": true,
+  "scope": "One final batch of 24 synthetic real DeepSeek conversations through isolated DSH profiles and the exact installed candidate: 10 regression, 3 natural capture, 7 scripted-approval and 4 additional normal-chat cases. No direct business API calls or fixture LLM. Scoped functional and known major answer-regression checks passed; this is not a universal answer-quality guarantee.",
+  "checks": {
+    "actualModelConversations": true,
+    "nativePluginToolCalls": true,
+    "correctIndicatorCodesAndRawFields": true,
+    "entityIsolation": true,
+    "scopedPersistenceClaimsInFinalBatch": true,
+    "importAndCaptureOriginDistinguished": true,
+    "independentApprovalsAndVerifiedReadback": true,
+    "allFinalAnswersWithin300Characters": true
+  },
+  "conversations": 24,
+  "toolCalls": 38,
+  "machineChecks": 121,
+  "maxFinalAnswerCharacters": 251,
+  "sourceEvidenceSha256": [
+    "f16642caba1a5d35ec0ed0adcf0bbf484b45377f8e4a4642742fee5a60d247a4",
+    "ce79c0cd8fbcae6de02296b9e889990869e93abae73d7985e7fd585fcec453cc",
+    "4debee92438f63c7e0f9fb0aa38a463e8dc58ef31c1d6a01652705baa6743be3",
+    "2264fa00000f2890beb09645d447baf8025e16f252f3d989c8a221e70d8589f3"
+  ],
+  "agentSemanticReview": {
+    "performed": true,
+    "human": false,
+    "majorEvidenceOrPrivacyDefectsFound": false,
+    "nonblockingObservations": [
+      "One answer says cha-bu-dao with the wrong Chinese character; several answers still expose unnecessary status labels. These cosmetic model variations are not guarantees of flawless copy."
+    ]
+  },
+  "limitations": [
+    "Prior failing candidates are retained, not silently replaced.",
+    "Model behavior remains stochastic; finite passing cases do not prove all future responses.",
+    "Scripted approvals do not substitute for human UI acceptance.",
+    "Real health data, OCR completeness, other platforms and unrestricted general-tool compositions remain unqualified."
+  ]
+}

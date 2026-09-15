@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import { readFile, writeFile } from 'node:fs/promises'
 import { resolve, join } from 'node:path'
 import { createHash } from 'node:crypto'
+import { answerQualityIssues } from '../tests/answer-quality.mjs'
 
 const root = resolve(import.meta.dirname, '..')
 const option = name => { const i = process.argv.indexOf(name); return i < 0 ? undefined : process.argv[i + 1] }
@@ -19,6 +20,8 @@ const values = item => results(item).flatMap(r => r.content.filter(b => b.type =
 const caseOf = id => report.cases.find(c => c.id === id)
 const json = value => JSON.stringify(value)
 const allSessions = report.cases.flatMap(c => c.sessions)
+const answerQuality = report.cases.map(c => ({ id: c.id, issues: answerQualityIssues(c.sessions.map(s => s.finalAnswer).join('\n'), { domain: /wiki|project|memory|capture/.test(c.id) ? 'project' : 'clinical', imported: c.id === 'memory-new-session' }) }))
+for (const entry of answerQuality) check(`${entry.id}: known answer-quality regressions absent`, entry.issues.length === 0)
 check('exact real-model runner scope', report.noFixtureModel && report.noDirectToolExecution && report.noAutomaticApproval && report.shippedPluginPromptUnmodified && report.syntheticOnly)
 check('no failed, timed-out, missing or empty model turns', report.cases.every(c => c.outcome.code === 0 && !c.outcome.timedOut && !c.outcome.outputExceeded && c.sessions.length === 1 && answer(c).trim()))
 check('every assistant message from selected real model', allSessions.every(s => s.messages.length > 0 && s.messages.every(m => m.model === report.model)))
@@ -56,6 +59,7 @@ const result = {
   toolCalls: allSessions.reduce((n, s) => n + s.toolCalls.length, 0),
   answerLengths: report.cases.map(c => ({ id: c.id, chars: answer(c).length })),
   semanticReviewRequired: ['privacy claims', 'evidence boundaries', 'unnecessary inference', 'language and concision'],
+  answerQuality,
   publicationReady: false, healthPrivacyQualified: false,
 }
 await writeFile(output, JSON.stringify(result, null, 2) + '\n', { mode: 0o600, flag: 'wx' })

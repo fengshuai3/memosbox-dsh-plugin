@@ -4,7 +4,7 @@ A native DeepSeek Harness bundle combining Mirobody local terminology/document t
 
 [中文](README.md) | English
 
-**0.2.0-beta.3 is an unreleased development build, not production-ready.** Real health-file processing is unsupported pending host privacy validation. Mirobody currently targets macOS arm64 and an explicitly prepared CPython 3.12 environment; unsupported platforms fail closed.
+**0.2.0-beta.4 is an unreleased development build, not production-ready.** Real health-file processing is unsupported pending host privacy validation. Mirobody currently targets macOS arm64 and an explicitly prepared CPython 3.12 environment; unsupported platforms fail closed.
 
 ## Components
 

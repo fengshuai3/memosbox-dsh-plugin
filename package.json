@@ -1,6 +1,6 @@
 {
   "name": "memosbox-dsh-plugin",
-  "version": "0.2.0-beta.3",
+  "version": "0.2.0-beta.4",
   "description": "Native DeepSeek Harness bundle for governed MemOS memory, a Markdown wiki, and local Mirobody health-data normalization.",
   "author": { "name": "冯帅", "email": "714205152@qq.com" },
   "repository": { "type": "git", "url": "https://gitee.com/guandalaifu/memosbox-dsh-plugin.git" },

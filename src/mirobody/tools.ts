@@ -6,6 +6,7 @@ import type { MirobodyExecutor } from './types.js'
 import { JobStore } from './job-store.js'
 import { makeCandidate, verifyCandidate, candidateMarkdown, type ImportCandidate } from './candidates.js'
 import { requestApproval, type ApprovalOutcome } from './approval.js'
+import { ApprovalStopGuard } from './approval-stop.js'
 import { commitCandidate } from './commit.js'
 import { authorizedSource } from './documents.js'
 import { extractWithDsh } from './extraction.js'
@@ -15,6 +16,7 @@ import type { WikiAdapter } from '../wiki/adapter.js'
 import type { MemoryManager } from '../memory/manager.js'
 import { writeApprovedMemory } from '../memory/approved-writer.js'
 import { requireAgent, requireWorkspace, type JsonValue } from '../privacy/execution.js'
+import { BRIEF_ANSWER_STYLE, clinicalEvidenceNote, LOOKUP_EFFECTS, LOOKUP_STORAGE_NOTE } from '../answer-evidence.js'
 
 export interface MirobodyToolOptions {
   provider: MirobodyExecutor
@@ -33,8 +35,8 @@ const OUTPUT = {
   schema: { type: 'object' as const, additionalProperties: true as const, properties: { text: { type: 'string' as const, required: true as const } } },
   render: (_args: unknown, value: unknown) => [{ type: 'text' as const, text: JSON.stringify(value) }],
 }
-function output(text: string, data: unknown): { text: string; data: JsonValue } {
-  return { text: `${text} 本回执仅描述指定业务步骤；DSH 会话历史、工具结果及日志仍可能持久化，不能据此声称没有任何存储或文件改动。`, data: JSON.parse(JSON.stringify(data)) as JsonValue }
+function output(text: string, data: unknown): { text: string; answerStyle: string; data: JsonValue } {
+  return { text: `${text} DSH 会话历史与日志仍可能留存。`, answerStyle: BRIEF_ANSWER_STYLE, data: JSON.parse(JSON.stringify(data)) as JsonValue }
 }
 export function approvalSummary(decisions: Array<{ stage: string; outcome: ApprovalOutcome }>): string {
   const labels: Record<string, string> = { sourceRead: '本地源文件读取', modelTransmission: '向提取模型外发', wikiWrite: '本地 Wiki 写入', memoryWrite: '本地 MemOS 写入' }
@@ -57,6 +59,12 @@ export function registerMirobodyTools(ctx: Context, options: MirobodyToolOptions
   let disposal: Promise<void> | undefined
   const durableOutcomes = new WeakMap<object, ReturnType<typeof output>>()
   const executionSignals = new WeakMap<object, AbortSignal>()
+  const approvalStop = new ApprovalStopGuard()
+  const stopResult = (exec: ToolRunContext) => {
+    requireAgent(exec)
+    const blockedBy = approvalStop.blocked(exec.agent.session)
+    return blockedBy ? output('此前审批未通过，本轮导入流程已停止。不得改为单目的地、换候选或重新解析绕过；请等待用户在新一轮明确提出请求，再重新审批。此调用未读取、外发、创建候选或写入 Wiki/MemOS。', { status: 'refused', error: 'APPROVAL_REFUSAL_LATCHED', blockedBy, approvalDecisions: [], destinationsChanged: false, performed: false }) : undefined
+  }
   const finalizeDurable: NonNullable<ToolDefinition['finalizeContent']> = (exec, finalResult) => {
     const durable = durableOutcomes.get(exec)
     durableOutcomes.delete(exec)
@@ -119,32 +127,36 @@ export function registerMirobodyTools(ctx: Context, options: MirobodyToolOptions
         assertNonSensitiveMode(options.sensitiveMode)
         const result = await options.provider.execute(args.metricInfo ? 'metric_info' : 'resolve', args.metricInfo ? { name: args.name } : { rawName: args.name, ...(args.value === undefined ? {} : { rawValue: args.value }), ...(args.unit === undefined ? {} : { rawUnit: args.unit }) }, { signal: exec.signal, session: exec.agent.session })
         if (args.metricInfo) return output('本次只查询设备指标元数据目录，并未执行临床 LOINC 编码匹配。metric=null 不能解释为没有 LOINC 映射；如问题是临床指标编号，请用同一名称、metricInfo=false 再调用本工具。', { ...result, queryDomain: 'device-metadata-only', loincMappingAttempted: false, clinicalLookup: { name: args.name, metricInfo: false } })
-        return output('当前本地词典解析结果，非临床验证。未匹配不代表所有标准均不存在；单候选仍需与名称/标本/量纲核对。本工具不执行显式 Wiki/MemOS 提交；自动捕获取决于配置，DSH 会话记录仍可能持久化。', result)
+        return { text: `${clinicalEvidenceNote(result)} ${LOOKUP_STORAGE_NOTE}`, answerStyle: BRIEF_ANSWER_STYLE, data: JSON.parse(JSON.stringify({ ...result, evidenceDomain: 'local-clinical-terminology', effects: LOOKUP_EFFECTS })) as JsonValue }
       },
     }))
     register(defineTool({
-      name: 'mirobody_normalize_readings', description: 'Normalize a bounded batch of non-sensitive readings using the real local Mirobody library. Raw values and units are retained; no automatic save.',
+      name: 'mirobody_normalize_readings', description: 'Normalize a bounded batch of non-sensitive readings using the real local Mirobody library. Preserve literal raw values and units. This call does not commit to Wiki/MemOS; host logging and configured capture are separate.',
       parameters: { readings: { type: 'array', required: true, items: { type: 'object', additionalProperties: false, properties: { rawName: { type: 'string', required: true }, rawValue: { type: 'string' }, rawUnit: { type: 'string' } } } } },
       output: OUTPUT, isConcurrencySafe: () => false,
       async execute(args, exec) {
         requireAgent(exec)
         assertNonSensitiveMode(options.sensitiveMode)
-        return output('本地规范化结果：保留原始读数，不作算术换算或显式业务提交；自动捕获取决于配置，宿主仍可能记录会话与工具结果。', await options.provider.execute('normalize_readings', { readings: args.readings }, { signal: exec.signal, session: exec.agent.session }))
+        const result = await options.provider.execute('normalize_readings', { readings: args.readings }, { signal: exec.signal, session: exec.agent.session })
+        return { text: `${clinicalEvidenceNote(result)} ${LOOKUP_STORAGE_NOTE}`, answerStyle: BRIEF_ANSWER_STYLE, data: JSON.parse(JSON.stringify({ ...result, evidenceDomain: 'local-clinical-terminology', effects: LOOKUP_EFFECTS })) as JsonValue }
       },
     }))
     register(defineTool({
       name: 'mirobody_parse_document', description: 'FIRST step for a staged synthetic sourceId (hash plus .txt/.pdf/.xlsx). Set useModel=true to extract readings with the current model. Returns candidateId for subsequent preview, then commit. Requests source reading and model transmission independently. Not for real health data.',
       finalizeContent: finalizeDurable,
-      parameters: { sourceId: { type: 'string', required: true }, useModel: { type: 'boolean' } }, output: OUTPUT, isConcurrencySafe: () => false,
+      parameters: { sourceId: { type: 'string', required: true }, useModel: { type: 'boolean', description: 'When the user requests model-assisted extraction, set true on the FIRST parse call; do not first parse without a model. Independent transmission approval is still required.' } }, output: OUTPUT, isConcurrencySafe: () => false,
       async execute(args, exec) {
         requireAgent(exec)
         assertNonSensitiveMode(options.sensitiveMode)
         const approvalDecisions: Array<{ stage: string; outcome: ApprovalOutcome }> = []
+        const stopped = stopResult(exec)
+        if (stopped) return stopped
         const effects = { sourceRead: false, modelDispatched: false, candidateStored: false, wikiCommitted: false, memoryCommitted: false }
         const finish = (text: string, data: Record<string, unknown>) => output(text, { ...data, approvalDecisions, approvalSummary: approvalSummary(approvalDecisions), effects })
         if (!options.syntheticDocumentsEnabled) return finish('文档处理未启用。', { status: 'unavailable' })
         const readOutcome = ctx.approval ? await ctx.approval.request({ agent: exec.agent, toolName: 'mirobody_parse_document', reason: `Read staged synthetic source ${args.sourceId} into private local candidate storage? This does not authorize a model request or Wiki/Memory import.`, signal: exec.signal }) : 'unavailable'
         approvalDecisions.push({ stage: 'sourceRead', outcome: readOutcome })
+        approvalStop.record(exec.agent.session, 'mirobody_parse_document', readOutcome)
         if (readOutcome !== 'allowed-once') return finish('读取授权未通过，未读取源文件，也未进入模型外发或业务提交。', { status: 'refused' })
         exec.signal.throwIfAborted()
         const source = await authorizedSource(options.sourceRoot, args.sourceId)
@@ -158,6 +170,7 @@ export function registerMirobodyTools(ctx: Context, options: MirobodyToolOptions
           if (!options.modelExtractionEnabled) return finish('Model extraction disabled.', { status: 'needs_model' })
           const modelOutcome = await ctx.approval.request({ agent: exec.agent, toolName: 'mirobody_parse_document', reason: `Send extracted text from source digest ${source.digest} to this DSH session's selected model? Provider handling and host logging may persist this synthetic content. No Wiki/Memory write is authorized.`, signal: exec.signal })
           approvalDecisions.push({ stage: 'modelTransmission', outcome: modelOutcome })
+          approvalStop.record(exec.agent.session, 'mirobody_parse_document', modelOutcome)
           if (modelOutcome !== 'allowed-once') return finish('源文件读取已经单独获批并完成；随后模型外发授权未通过，未向提取模型发送源文本，未创建候选，也未提交 Wiki/MemOS。', { status: 'refused' })
           exec.signal.throwIfAborted()
           effects.modelDispatched = true
@@ -199,24 +212,30 @@ export function registerMirobodyTools(ctx: Context, options: MirobodyToolOptions
       },
     }))
     register(defineTool({
-      name: 'mirobody_commit_import', description: 'Ask the user to approve an immutable reviewed candidate for Wiki and optionally MemOS, separately. Checks digest and scope; partial commits recover forward. Model-supplied approval flags are not accepted.',
+      name: 'mirobody_commit_import', description: 'Ask the user to approve an immutable reviewed candidate for Wiki and optionally MemOS, separately. Any rejection, cancellation or unavailable approval stops this turn: never retry with changed destinations or candidates. A new user turn needs fresh approvals. Checks digest and scope; partial commits recover forward. Model-supplied approval flags are not accepted.',
       finalizeContent: finalizeDurable,
-      parameters: { candidateId: { type: 'string', required: true }, includeMemory: { type: 'boolean' } }, output: OUTPUT, isConcurrencySafe: () => false,
+      parameters: { candidateId: { type: 'string', required: true }, includeMemory: { type: 'boolean', description: 'Set true on the FIRST commit when the user requests BOTH Wiki and memory. This single call requests two INDEPENDENT approvals and writes neither destination before both grants. Do NOT split calls to obtain separate approvals. False/default is ONLY for a Wiki-only request.' } }, output: OUTPUT, isConcurrencySafe: () => false,
       async execute(args, exec) {
         requireAgent(exec)
         assertNonSensitiveMode(options.sensitiveMode)
         const approvalDecisions: Array<{ stage: string; outcome: ApprovalOutcome }> = []
-        const finish = (text: string, data: Record<string, unknown>) => output(text, { ...data, approvalDecisions, approvalSummary: approvalSummary(approvalDecisions), approvalScope: '本次提交只审批本地 Wiki/MemOS 写入，没有审批模型外发。不能把本地写入被拒说成模型外发被拒。读取与模型外发以此前解析回执为准。' })
+        const stopped = stopResult(exec)
+        if (stopped) return stopped
+        const record = (stage: string, outcome: ApprovalOutcome) => {
+          approvalDecisions.push({ stage, outcome })
+          approvalStop.record(exec.agent!.session, 'mirobody_commit_import', outcome)
+        }
+        const finish = (text: string, data: Record<string, unknown>) => output(text, { ...data, approvalDecisions, approvalSummary: approvalSummary(approvalDecisions), approvalScope: '本次 commit_import 只处理本地写入；此前 parse_document 是否模型外发必须按解析回执单独报告，不能泛称“本工具未外发”，也不能把本地写入被拒说成模型外发被拒。' })
         const hint = candidateInputHint(args.candidateId)
         if (hint) return hint
         if (!options.wikiWriteEnabled) return output('Wiki writes disabled.', { status: 'refused' })
         const { candidate, store } = await load(exec, args.candidateId)
         if (!candidate.readings.length || candidate.partial || candidate.readings.some(r => r.status !== 'ready')) return output('Candidate requires resolution and a new review before import.', { status: 'unresolved' })
-        const wikiApproval = await requestApproval(ctx, exec, candidate, 'wiki', outcome => approvalDecisions.push({ stage: 'wikiWrite', outcome }))
+        const wikiApproval = await requestApproval(ctx, exec, candidate, 'wiki', outcome => record('wikiWrite', outcome))
         if (!wikiApproval) return finish('Wiki 写入审批未通过，本次未写入 Wiki/MemOS；之前的读取/外发审批以解析回执为准。', { status: 'refused', destinationsChanged: false })
         const includeMemory = args.includeMemory === true
         if (includeMemory && (!options.explicitMemoryWriteEnabled || !options.memory)) return finish('Explicit MemOS writes unavailable.', { status: 'unavailable', destinationsChanged: false })
-        const memoryApproval = includeMemory ? await requestApproval(ctx, exec, candidate, 'memory', outcome => approvalDecisions.push({ stage: 'memoryWrite', outcome })) : undefined
+        const memoryApproval = includeMemory ? await requestApproval(ctx, exec, candidate, 'memory', outcome => record('memoryWrite', outcome)) : undefined
         if (includeMemory && !memoryApproval) return finish('Wiki 审批已单独通过，但 MemOS 审批未通过，因此本次两个目的地均未写入。批准不等于已经执行写入。', { status: 'refused', destinationsChanged: false })
         const receipt = await commitCandidate({ candidate, store, wiki: await options.wiki(exec), sessionId: exec.agent.session.id, wikiApproval,
           ...(memoryApproval ? { memoryApproval } : {}), includeMemory, signal: exec.signal,
@@ -226,7 +245,10 @@ export function registerMirobodyTools(ctx: Context, options: MirobodyToolOptions
           } } : {}),
         })
         // Approval internals stay private; receipts contain only identifiers.
-        const result = finish(receipt.state === 'complete' ? '业务提交已完成；Wiki 和 MemOS（如请求）分别经过独立审批，不是同一次批准。按各目的地回执报告实际持久化状态。' : 'Import requires verification/recovery.', { status: receipt.state, operationId: receipt.operationId, candidateDigest: receipt.candidateDigest, wiki: receipt.wiki, memory: receipt.memory, error: receipt.error })
+        const result = finish(receipt.state === 'complete'
+          ? receipt.memory?.verified ? 'Wiki 与 MemOS 均有已持久化回执。各次实际审批见解析/提交回执；不要把多次审批简化为各一次。'
+            : 'Wiki 有已持久化回执；本次未请求 MemOS 写入，不能说两个目的地都已完成。'
+          : 'Import requires verification/recovery.', { status: receipt.state, operationId: receipt.operationId, candidateDigest: receipt.candidateDigest, requestedDestinations: includeMemory ? ['wiki', 'memory'] : ['wiki'], wiki: receipt.wiki, memory: receipt.memory, error: receipt.error })
         durableOutcomes.set(exec, result)
         return result
       },

@@ -3,7 +3,8 @@ import assert from 'node:assert/strict'
 import { readFile, writeFile } from 'node:fs/promises'
 import { resolve, join } from 'node:path'
 import { createHash } from 'node:crypto'
-import { inventsTransmissionRefusal } from './approval-answer-checks.mjs'
+import { acknowledgesPriorRead, inventsTransmissionRefusal, reportsIndependentApprovals } from './approval-answer-checks.mjs'
+import { answerQualityIssues } from './answer-quality.mjs'
 const root = resolve(import.meta.dirname, '..')
 const option = key => process.argv[process.argv.indexOf(key) + 1]
 assert(process.argv.includes('--input') && process.argv.includes('--output'))
@@ -20,6 +21,7 @@ const observations = c => c.sessions.flatMap(s => s.toolResults).flatMap(r => r.
 const values = c => observations(c).flatMap(x => x.values)
 const decided = c => c.approvals.filter(a => a.type === 'approval/decided')
 for (const c of report.cases) {
+  check(`${c.phase}: known answer-quality regressions absent`, answerQualityIssues(final(c)).length === 0)
   check(`${c.phase}: successful real model turn`, c.outcome.code === 0 && !c.outcome.timedOut && !c.outcome.outputExceeded && c.sessions.length === 1 && c.sessions[0].messages.every(m => m.model === report.model) && final(c).trim())
   check(`${c.phase}: no tool errors`, observations(c).every(r => !r.isError))
   const requests = c.approvals.filter(a => a.type === 'approval/asked')
@@ -28,7 +30,7 @@ for (const c of report.cases) {
     check('parse before preview before commit', tools(c).indexOf('mirobody_parse_document') >= 0 && tools(c).indexOf('mirobody_preview_import') > tools(c).indexOf('mirobody_parse_document') && tools(c).indexOf('mirobody_commit_import') > tools(c).indexOf('mirobody_preview_import'))
     check('four independent allowed-once approvals', requests.length === 4 && decided(c).every(d => d.data.outcome === 'allowed-once'))
     check('dual destination persisted and verified', values(c).some(v => v.data?.status === 'complete' && v.data?.wiki?.ok && v.data?.memory?.verified))
-    check('answer reports independent approvals', /独立/.test(final(c)) && !/均由同一次审批|未分别得到独立/.test(final(c)))
+    check('answer reports independent approvals', reportsIndependentApprovals(final(c)))
   } else if (c.phase === 'readback') {
     const allowed = report.cases.find(x => x.phase === 'allow')
     const commit = allowed && values(allowed).find(v => v.data?.status === 'complete')?.data
@@ -42,11 +44,13 @@ for (const c of report.cases) {
   } else {
     const boundary = c.phase.split('-')[1], expected = c.phase.startsWith('cancel-') ? 'cancelled' : 'rejected'
     const refused = values(c).find(v => v.data?.status === 'refused')?.data
+    const refusalIndex = c.approvals.findIndex(a => a.type === 'approval/decided' && a.data.outcome !== 'allowed-once')
+    check(`${c.phase}: no new approval requests after refusal`, refusalIndex >= 0 && !c.approvals.slice(refusalIndex + 1).some(a => a.type === 'approval/asked'))
     check(`${c.phase}: actual requested refusal`, decided(c).at(-1)?.data.outcome === expected && refused?.approvalDecisions.at(-1)?.outcome === expected)
     check(`${c.phase}: no completed business writes`, !values(c).some(v => v.data?.status === 'complete') && (refused?.destinationsChanged === false || refused?.effects?.wikiCommitted === false && refused?.effects?.memoryCommitted === false))
     if (boundary === 'read' || boundary === 'transmit') check(`${c.phase}: model not dispatched`, refused?.effects?.modelDispatched === false && refused.effects.sourceRead === (boundary === 'transmit'))
-    if (boundary === 'transmit') check(`${c.phase}: answer acknowledges prior read`, /读取[\s\S]*(获批|批准|完成|allowed-once)/.test(final(c)) && !/读取[^。\n]*未被单独请求/.test(final(c)))
-    if (expected === 'cancelled') check(`${c.phase}: answer distinguishes cancellation`, /取消/.test(final(c)) && !/取消\s*[\/／或]\s*拒绝|被拒绝|遭拒绝/.test(final(c)))
+    if (boundary === 'transmit') check(`${c.phase}: answer acknowledges prior read`, acknowledgesPriorRead(final(c)))
+    if (expected === 'cancelled') check(`${c.phase}: answer distinguishes cancellation`, /取消/.test(final(c)) && !/取消\s*[\/／或]\s*拒绝|被拒绝|遭拒绝|被拒[（(][^）)]*取消/.test(final(c)))
     if (boundary === 'memory' || boundary === 'wiki') check(`${c.phase}: no invented model refusal or remote Wiki write`, !inventsTransmissionRefusal(final(c)))
   }
 }

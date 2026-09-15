@@ -7,6 +7,7 @@ import { Context } from '@deepseek-ai/cordis'
 import ToolRuntime, { type ToolRunContext, type ToolDefinition } from '@deepseek-ai/dsh-tools'
 import { ToolCallId } from '@deepseek-ai/dsh-llm'
 import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
+import { Session, SessionId } from '@deepseek-ai/dsh-session'
 import { makeCandidate, verifyCandidate, candidateDigest, candidateMarkdown } from '../src/mirobody/candidates.js'
 import { checkApproval, requestApproval, type CandidateApproval } from '../src/mirobody/approval.js'
 import { commitCandidate } from '../src/mirobody/commit.js'
@@ -31,6 +32,36 @@ function fixture(root: string) {
 }
 
 describe('candidate, evidence and approval boundary', () => {
+  it.each(['rejected', 'cancelled', 'unavailable'] as const)('blocks destination downgrade and reparse after memory %s, then requires fresh approval next turn', async outcome => {
+    const root = await mkdtemp(join(tmpdir(), 'memosbox-refusal-stop-'))
+    const { candidate, scope } = fixture(root)
+    const wiki = new WikiAdapter({ root: join(root, 'wiki'), autoInitialize: true, maxPageBytes: 1024 * 1024 })
+    const store = new JobStore(join(root, 'data/scopes', scope.key, 'imports'), undefined, join(root, 'data'))
+    const definitions = new Map<string, ToolDefinition>()
+    const request = vi.fn().mockResolvedValueOnce('allowed-once').mockResolvedValueOnce(outcome).mockResolvedValue('allowed-once')
+    const ctx = { approval: { request }, tools: { register(tool: ToolDefinition) { definitions.set(tool.name, tool); return () => definitions.delete(tool.name) } } } as unknown as Context
+    const dispose = registerMirobodyTools(ctx, { provider: {} as MirobodyExecutor, dataRoot: join(root, 'data'), sourceRoot: root, sensitiveMode: false, syntheticDocumentsEnabled: true, modelExtractionEnabled: true, wikiWriteEnabled: true, explicitMemoryWriteEnabled: true, memory: {} as MirobodyToolOptions['memory'], scope: () => scope, wiki: async () => wiki })
+    const session = Session.create(SessionId('test-session'))
+    const exec = { signal: new AbortController().signal, agent: { session } } as ToolRunContext
+    const call = async (name: string, args: Record<string, unknown>) => await definitions.get(name)!.execute(args, { ...exec }) as { data: Record<string, unknown> }
+    try {
+      await wiki.initialize()
+      await store.write(`candidates/${candidate.id}.json`, candidate)
+      session.append('turn/start', { turn: 1 })
+      expect((await call('mirobody_commit_import', { candidateId: candidate.id, includeMemory: true })).data.status).toBe('refused')
+      for (const candidateId of [candidate.id, 'b'.repeat(36)]) {
+        expect((await call('mirobody_commit_import', { candidateId, includeMemory: false })).data.error).toBe('APPROVAL_REFUSAL_LATCHED')
+      }
+      expect((await call('mirobody_parse_document', { sourceId: candidate.sourceId, useModel: false })).data.error).toBe('APPROVAL_REFUSAL_LATCHED')
+      expect(request).toHaveBeenCalledTimes(2)
+      expect(await wiki.page(candidate.targetPath)).toBeNull()
+      session.append('turn/end', { turn: 1, reason: { kind: 'completed' } })
+      session.append('turn/start', { turn: 2 })
+      expect((await call('mirobody_commit_import', { candidateId: candidate.id, includeMemory: false })).data.status).toBe('complete')
+      expect(request).toHaveBeenCalledTimes(3)
+      expect(await wiki.page(candidate.targetPath)).not.toBeNull()
+    } finally { await dispose(); await rm(root, { recursive: true, force: true }) }
+  })
   it('does not present a device metadata miss as a clinical LOINC miss', async () => {
     const definitions = new Map<string, ToolDefinition>()
     const execute = vi.fn(async () => ({ status: 'unresolved', metric: null, operation: 'metric_info' }))
@@ -143,6 +174,29 @@ describe('persistent governed import', () => {
       expect(memoryWrite).toHaveBeenCalledTimes(1)
       expect(await readFile(join(root, 'wiki', 'log.md'), 'utf8')).toBe(logBefore)
     } finally { await core.shutdown(); await rm(root, { recursive: true, force: true }) }
+  })
+  it('keeps Wiki-only imports discoverable after a later approved memory extension without rewriting the page', async () => {
+    const root = await mkdtemp(join(tmpdir(), 'memosbox-memory-extension-'))
+    const { candidate, approval } = fixture(root)
+    const wiki = new WikiAdapter({ root: join(root, 'wiki'), autoInitialize: true, maxPageBytes: 1024 * 1024 })
+    const store = new JobStore(join(root, 'jobs'))
+    const memoryId = approvedMemoryId(candidate.scopeKey, candidate.operationId, candidate.digest)
+    const writeMemory = vi.fn(async () => ({ id: memoryId, verified: true as const, existing: false }))
+    try {
+      await wiki.initialize()
+      const base = { candidate, store, wiki, sessionId: 'test-session', wikiApproval: approval('wiki') }
+      const first = await commitCandidate({ ...base, includeMemory: false })
+      expect(first.memory).toBeUndefined()
+      const page = await wiki.page(candidate.targetPath)
+      expect(page?.body).toContain(`MemOS lookup ID: ${memoryId}`)
+      expect(page?.body).toContain('NOT proof')
+      await expect(commitCandidate({ ...base, includeMemory: true, writeMemory })).rejects.toThrow('APPROVAL_REQUIRED')
+      expect(writeMemory).not.toHaveBeenCalled()
+      const extended = await commitCandidate({ ...base, includeMemory: true, memoryApproval: approval('memory'), writeMemory })
+      expect(extended.memory?.id).toBe(memoryId)
+      expect(writeMemory).toHaveBeenCalledTimes(1)
+      expect((await wiki.page(candidate.targetPath))?.version).toBe(page?.version)
+    } finally { await rm(root, { recursive: true, force: true }) }
   })
   it('retains approved Wiki after MemOS failure, then recovers only the missing destination', async () => {
     const root = await mkdtemp(join(tmpdir(), 'memosbox-partial-'))

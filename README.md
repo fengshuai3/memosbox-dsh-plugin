@@ -4,7 +4,7 @@
 
 memOSbox 将 MemOS 记忆、Markdown Wiki 和 Mirobody 指标/文档处理组合为一个 DeepSeek Harness 原生 bundle，由 DSH 统一安装、加载、调用和卸载。不依赖旧版 HTTP 服务、MCP 服务或常驻 Python 守护进程；DSH 对话模型本身仍可使用远程 API。
 
-**当前为 0.2.0-beta.3 开发源码，未发布 npm 版本，未完成生产验收，也不表示已被插件市场收录。仅使用合成测试数据，不处理真实患者资料。**
+**当前为 0.2.0-beta.4 开发源码，未发布 npm 版本，未完成生产验收，也不表示已被插件市场收录。仅使用合成测试数据，不处理真实患者资料。**
 
 维护者：冯帅 · [714205152@qq.com](mailto:714205152@qq.com)
 
@@ -42,7 +42,7 @@ node scripts/verify-consumer.mjs --output-dir artifacts/local-check
 最后一条生成带哈希目录的安装包，核对干净消费者安装及生产依赖审计。将它输出的实际绝对路径替换到下面命令，安装到独立测试 profile：
 
 ```sh
-dsh plugin --profile memosbox-dev add -w /absolute/path/to/memosbox-dsh-plugin-0.2.0-beta.3.tgz
+dsh plugin --profile memosbox-dev add -w /absolute/path/to/memosbox-dsh-plugin-0.2.0-beta.4.tgz
 dsh --profile memosbox-dev --dump-config
 ```
 
@@ -73,7 +73,7 @@ node scripts/provision-runtime.mjs --python /absolute/path/to/python3.12 \
 - 读取文件、向提取模型外发、Wiki 写入、MemOS 写入分别授权；不要用“合成数据”设置冒充脱敏。
 - 没有业务写入不等于没有文件修改：DSH 会话历史、工具结果、日志和初始化文件仍可能持久化。
 - 原始运行数据在配置的数据根内按 profile/workspace 隔离。卸载保留数据和运行缓存，不自动迁移旧库。
-- 普通回答仍有冗长、保存范围措辞及不相关提示问题；真实人工 Web 审批、最终候选迁移回退和真实健康数据隐私尚未全部验收。
+- 本分支修复普通回答的保存范围、来源说明及冗长问题，并加入回答质量回归检查；效果以准确候选的真实对话证据为准，不保证所有模型与问法。真实人工 Web 审批、最终候选迁移回退和真实健康数据隐私尚未全部验收。
 - 此次只公开源码；此前测试回执绑定各自安装包哈希，不能自动认证后续文档/元数据修改产生的新包。
 
 ## 文件管理与验证

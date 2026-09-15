@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.4",
+  "artifactSha256": "587f9f27ab644b1b846943a183a35e17ffdabcb026476ab263b86e2168743a82",
+  "verifiedAt": "2026-09-15T07:17:21.487Z",
+  "humanPerformed": false,
+  "uiTested": false,
+  "kind": "approvalSimulation",
+  "passed": true,
+  "scope": "Real installed DSH services with scripted approvals, plus seven real-model dialogue scenarios. Eight native rejection/cancellation boundaries, same-turn retry/downgrade/reparse blocking and byte-identical rejected-write data; no human UI qualification.",
+  "checks": {
+    "eightNativeNegativeCases": true,
+    "separateReadModelWikiMemoryApprovals": true,
+    "noBusinessWritesWhenDenied": true,
+    "noExtractionDispatchWhenDenied": true,
+    "noNewApprovalsAfterRefusal": true,
+    "destinationDowngradeBlocked": true,
+    "reparseAfterRefusalBlocked": true,
+    "newHostTurnNeedsFreshApproval": true,
+    "exactCrossSessionWikiMemoryReadback": true,
+    "cancellationDistinctFromRejection": true,
+    "cliAddRemoveAndLoaderLifecycle": true
+  },
+  "dialogueCases": 7,
+  "dialogueMachineChecks": 59,
+  "nativeEvidenceSha256": "5d731ca6bc6ce802743649322f2d0a16747b3e6359ba2c56b87cc958a71b9dbb",
+  "dialogueEvidenceSha256": "4debee92438f63c7e0f9fb0aa38a463e8dc58ef31c1d6a01652705baa6743be3"
+}

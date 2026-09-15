@@ -24,8 +24,8 @@ export async function requestApproval(ctx: Context, exec: ToolRunContext, candid
     agent: exec.agent, toolName: 'mirobody_commit_import', signal: exec.signal,
     reason: `Approve ${target} persistence of reviewed candidate ${candidate.id}, digest ${candidate.digest}, scope ${candidate.scopeKey}, destination ${candidate.targetPath}, expected version ${candidate.expectedVersion}. This does not authorize the other destination or model transmission.`,
   })
-  exec.signal.throwIfAborted()
   record?.(outcome)
+  exec.signal.throwIfAborted()
   if (outcome !== 'allowed-once') return null
   return {
     digest: candidate.digest, scopeKey: candidate.scopeKey, sessionId: exec.agent.session.id,

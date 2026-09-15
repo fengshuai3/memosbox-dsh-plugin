@@ -8,6 +8,7 @@ import { sessionScope, type SessionScope } from '../privacy/scope.js'
 import type { PrivacyPolicy } from '../privacy/policy.js'
 import { openScopedMemory } from './core.js'
 import { requireAgent, requireWorkspace, type JsonValue } from '../privacy/execution.js'
+import { READBACK_ANSWER_STYLE, LOOKUP_EFFECTS, memoryOrigin } from '../answer-evidence.js'
 
 interface Entry { core: MemoryCore; bridge: DeepSeekHarnessBridge; scope: SessionScope }
 export interface MemoryManagerOptions {
@@ -76,8 +77,8 @@ export const MEMORY_OUTPUT = {
   schema: { type: 'object' as const, additionalProperties: true as const, properties: { text: { type: 'string' as const, required: true as const } } },
   render: (_args: unknown, value: unknown) => [{ type: 'text' as const, text: JSON.stringify(value) }],
 }
-function result(text: string, data: unknown): { text: string; data: JsonValue } {
-  return { text, data: JSON.parse(JSON.stringify(data)) as JsonValue }
+function result(text: string, data: unknown): { text: string; answerStyle: string; data: JsonValue } {
+  return { text, data: JSON.parse(JSON.stringify(data)) as JsonValue, answerStyle: READBACK_ANSWER_STYLE + '这是工作区记忆读取，不提临床词典；准确标注记录来源。' }
 }
 
 /** Reuses the official lifecycle bridge, with per-workspace databases and no
@@ -121,7 +122,7 @@ export function registerMemory(ctx: Context, manager: MemoryManager, policy: Pri
         const limit = Math.min(50, Math.max(1, args.maxResults ?? 5))
         const found = await manager.run(requireWorkspace(exec.agent.session.header.cwd), ({ core, scope }) => core.searchMemory({ agent: 'deepseek-harness', namespace: { agentKind: 'deepseek-harness', profileId: scope.key }, query: args.query, reason: 'tool_driven', topK: { tier1: limit, tier2: limit, tier3: limit } }, { signal: exec.signal, foreground: true }))
         exec.signal.throwIfAborted()
-        return result(found.hits.length ? '在当前作用域的持久化 MemOS 数据库中找到记忆。历史回答中的保存承诺不是当前存储状态证据。' : '当前词法查询未命中，不代表没有保存。查询不自动翻译；如对应 Wiki 页有 MemOS lookup ID，请用 memos_get 实际核对；否则使用该页证实的原始指标名/代码重试，保持工作区和项目范围。', { mode: 'lexical', automaticTranslation: false, captureEnabled: policy.captureEnabled, persistence: 'stored-memory', hits: found.hits.slice(0, limit).map(hit => ({ ...hit, snippet: hit.snippet.slice(0, maxChars), truncated: hit.snippet.length > maxChars })) })
+        return result(found.hits.length ? '当前工作区检索到持久化记忆。按原文回答，来源不明时不要猜测捕获方式。' : '当前工作区此查询未命中。仅在已有对应 Wiki 证据时，按 lookup ID 或原文词项精确核对；否则报告未检索到，不扩大项目范围。', { evidenceDomain: 'workspace-memory', effects: LOOKUP_EFFECTS, mode: 'lexical', automaticTranslation: false, captureEnabled: policy.captureEnabled, persistence: 'stored-memory', hits: found.hits.slice(0, limit).map(hit => ({ ...hit, snippet: hit.snippet.slice(0, maxChars), truncated: hit.snippet.length > maxChars })) })
       },
     })))
     off.push(ctx.tools.register(defineTool({
@@ -133,7 +134,8 @@ export function registerMemory(ctx: Context, manager: MemoryManager, policy: Pri
         if (!args.id.trim() || args.id.length > 128) throw new TypeError('Invalid memory ID')
         const row = await manager.run(requireWorkspace(exec.agent.session.header.cwd), ({ core, scope }) => core.getTrace(args.id, { agentKind: 'deepseek-harness', profileId: scope.key }))
         exec.signal.throwIfAborted()
-        return result(row ? '已读到当前作用域的持久化 MemOS 记录；对话记忆不等于人工批准的正式知识，历史“没保存”的说法不能推翻此读取证据。' : '当前作用域未找到此记忆。', row ? { id: row.id, text: row.agentText.slice(0, maxChars), truncated: row.agentText.length > maxChars, tags: row.tags ?? [], persistence: 'stored-memory-trace', captureEnabled: policy.captureEnabled } : { found: false })
+        const origin = row ? memoryOrigin(row.tags ?? []) : undefined
+        return result(row ? `已读取当前工作区持久化记录。${origin!.note}` : '当前工作区未找到此记录。', row ? { id: row.id, text: row.agentText.slice(0, maxChars), truncated: row.agentText.length > maxChars, tags: row.tags ?? [], origin, evidenceDomain: 'workspace-memory', effects: LOOKUP_EFFECTS, persistence: 'stored-memory-trace', captureEnabled: policy.captureEnabled } : { found: false, evidenceDomain: 'workspace-memory', effects: LOOKUP_EFFECTS })
       },
     })))
   }

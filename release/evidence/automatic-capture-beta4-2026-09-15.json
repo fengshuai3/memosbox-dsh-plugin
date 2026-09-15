@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "version": "0.2.0-beta.4",
+  "artifactSha256": "587f9f27ab644b1b846943a183a35e17ffdabcb026476ab263b86e2168743a82",
+  "verifiedAt": "2026-09-15T07:17:21.487Z",
+  "humanPerformed": false,
+  "uiTested": false,
+  "kind": "automaticCapture",
+  "passed": true,
+  "scope": "Three natural conversations in isolated DSH profiles with capture explicitly enabled. No database preseed; later process recalls the supplied synthetic marker and a different workspace does not. Formal capture defaults are unchanged.",
+  "checks": {
+    "naturalConversationWithoutPreseed": true,
+    "persistedTraceBeforeRecall": true,
+    "newProcessRecallsExactMarker": true,
+    "otherWorkspaceDoesNotReturnMarker": true,
+    "sourceOfRecallReviewed": true
+  },
+  "sourceEvidenceSha256": "ce79c0cd8fbcae6de02296b9e889990869e93abae73d7985e7fd585fcec453cc"
+}

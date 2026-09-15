@@ -148,6 +148,11 @@ if (!stage) {
       await writeFile(join(testRoot, 'inbox', ambiguousId), ambiguousText, { mode: 0o600 })
       const store = new JobStore(join(dataRoot, 'scopes', status.data.scope, 'imports'), undefined, dataRoot)
       session.append('turn/start', { turn: 1 })
+      let turn = 1
+      const nextTurn = () => {
+        session.append('turn/end', { turn, reason: { kind: 'completed' } })
+        session.append('turn/start', { turn: ++turn })
+      }
       const refused = await execute('mirobody_parse_document', { sourceId, useModel: true })
       assert.equal(refused.data.status, 'refused', 'No answerer must fail closed')
       assert.equal(modelCalls, 0)
@@ -166,6 +171,7 @@ if (!stage) {
       // Exercise the real host approval service, not a mocked plugin context.
       for (const boundary of ['read', 'transmit']) {
         for (const outcome of ['rejected', 'cancelled']) {
+          nextTurn()
           denyBoundary = boundary; denyOutcome = outcome
           const before = modelCalls
           const result = await execute('mirobody_parse_document', { sourceId, useModel: true })
@@ -178,6 +184,7 @@ if (!stage) {
         }
       }
       denyBoundary = undefined
+      nextTurn()
       const ambiguous = await execute('mirobody_parse_document', { sourceId: ambiguousId, useModel: true })
       assert.equal(ambiguous.data.status, 'partial')
       assert(ambiguous.data.warnings.includes('MULTIPLE_LEXICAL_CANDIDATES_REVIEW_REQUIRED'))
@@ -210,17 +217,25 @@ if (!stage) {
       }
       for (const boundary of ['wiki', 'memory']) {
         for (const outcome of ['rejected', 'cancelled']) {
+          nextTurn()
           denyBoundary = boundary; denyOutcome = outcome
           const before = await snapshot()
           const refusedWrite = await execute('mirobody_commit_import', { candidateId: candidate.id, includeMemory: true })
           assert.equal(refusedWrite.data.status, 'refused')
           assert.equal(refusedWrite.data.approvalDecisions.at(-1).outcome, outcome)
           assert.equal(refusedWrite.data.destinationsChanged, false)
+          const askedBeforeRetry = grants.length
+          const retry = await execute('mirobody_commit_import', { candidateId: candidate.id, includeMemory: false })
+          assert.equal(retry.data.error, 'APPROVAL_REFUSAL_LATCHED')
+          const reparse = await execute('mirobody_parse_document', { sourceId, useModel: false })
+          assert.equal(reparse.data.error, 'APPROVAL_REFUSAL_LATCHED')
+          assert.equal(grants.length, askedBeforeRetry, 'Retries must not ask for new approvals')
           assert.deepEqual(await snapshot(), before, 'Rejected/cancelled write must leave all plugin data bytes unchanged')
           negativeCases.push(`${boundary}:${outcome}`)
         }
       }
       denyBoundary = undefined
+      nextTurn()
       const result = await execute('mirobody_commit_import', { candidateId: candidate.id, includeMemory: true })
       assert.equal(result.data.status, 'complete', JSON.stringify(result))
       assert.equal(result.data.memory.verified, true)
@@ -229,7 +244,7 @@ if (!stage) {
       assert(grants.at(-2).includes('Approve wiki') && grants.at(-1).includes('Approve memory'))
       assert(grants.slice(-2).every(reason => reason.includes(candidate.digest)))
       answer()
-      session.append('turn/end', { turn: 1, reason: { kind: 'completed' } })
+      session.append('turn/end', { turn, reason: { kind: 'completed' } })
       const audit = Array.from({ length: session.seq }, (_, index) => session.eventAt(index)).filter(event => event.type.startsWith('approval/'))
       assert.equal(audit.filter(event => event.type === 'approval/asked').length, 19)
       assert.equal(audit.filter(event => event.type === 'approval/decided').length, 19)
