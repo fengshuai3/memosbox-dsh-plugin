@@ -2,34 +2,36 @@
   "schemaVersion": 1,
   "publicationReady": false,
   "version": "0.2.0-beta.4",
-  "artifactSha256": "587f9f27ab644b1b846943a183a35e17ffdabcb026476ab263b86e2168743a82",
+  "artifactSha256": "b1ae143719ad44232c0a8390939a4a63ee2e4afb3e624dd0e1d8ed2b7f14acf7",
   "reviewer": "",
-  "licenseReviewStatus": "deferred-by-user-not-cleared",
-  "previousApproval": "release/history/approval-beta3-before-source-upload-2026-09-15.json",
-  "status": "source-update-authorized-package-release-blocked",
+  "licenseReviewStatus": "resumed-upstream-clarification-and-final-review-pending",
+  "previousApproval": "release/history/approval-beta4-before-gitee-preparation-2026-09-15.json",
+  "status": "gitee-artifact-prepared-publication-blocked",
+  "distributionChannel": "gitee-release-attachment",
+  "npmPublicationRequested": false,
   "userTestReport": "release/evidence/user-web-test-report-2026-09-15.json",
   "evidence": {
-    "licenses": null,
-    "security": null,
-    "realDialogue": {
-      "path": "release/evidence/real-dialogue-beta4-2026-09-15.json",
-      "sha256": "cfa415636e439455378ca148e6d80e0aee373b4d82bf209bc5d9d919ebdb1faf",
-      "passed": true
+    "licenses": {
+      "path": "release/evidence/licenses-0.2.0-beta.4-20260915095006901.json",
+      "sha256": "15561115827ffbb59f16e1bca3b47661a092662fedd574656c0a93e3ac971827",
+      "passed": false
     },
-    "automaticCapture": {
-      "path": "release/evidence/automatic-capture-beta4-2026-09-15.json",
-      "sha256": "7c316fff9c16b9bf4995b3dc7198d542159703cb7e6b2dbc3be62db80d654e8c",
-      "passed": true
+    "security": {
+      "path": "release/evidence/gitee-security-review-2026-09-15.json",
+      "sha256": "3c215fc373de710d5a02b4a02987a5e7ec6a391a8e072ea03a35f86392c3a5a5",
+      "passed": false
     },
+    "realDialogue": null,
+    "automaticCapture": null,
     "humanApproval": null,
     "migrationRollback": {
-      "path": "release/evidence/migration-rollback-0.2.0-beta.4-20260915071540048.json",
-      "sha256": "dac24e62640653137c8d67592fc3249daaa5adb965f99efa7732316b983154c0",
+      "path": "release/evidence/migration-rollback-0.2.0-beta.4-20260915095114764.json",
+      "sha256": "83516a5567db537bd38cec738adb3380e3d68eec9d7cd8612340344e2dbfdb93",
       "passed": true
     },
     "approvalSimulation": {
-      "path": "release/evidence/approval-simulation-beta4-2026-09-15.json",
-      "sha256": "a2bfd10fc36cb7f554d202547af29fb5ed1d4bed13383da0aba4a7e915fdf33e",
+      "path": "release/evidence/gitee-native-approval-2026-09-15.json",
+      "sha256": "cdd8a319eb0f331d34cce1914aace65c29d9677703119cd5a08f3be751ebb732",
       "passed": true
     }
   }

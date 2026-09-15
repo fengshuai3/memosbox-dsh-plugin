@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "kind": "security",
+  "version": "0.2.0-beta.4",
+  "artifactSha256": "b1ae143719ad44232c0a8390939a4a63ee2e4afb3e624dd0e1d8ed2b7f14acf7",
+  "verifiedAt": "2026-09-15T09:51:07.763Z",
+  "passed": false,
+  "scope": "Baseline source/consumer checks, locked Python package advisory inventory, and native synthetic approval tests; not complete native binary or host privacy review.",
+  "checks": {
+    "nodeConsumerZeroKnownAdvisories": true,
+    "consumerFilesVerified": true,
+    "pythonAdvisoryCoverageComplete": true,
+    "pythonZeroKnownAdvisories": true,
+    "pythonInstalledVersionsMatch": true,
+    "officialWheelMetadataMatches": true,
+    "nativeApprovalNegativeCasesPassed": true,
+    "fullNativeBinaryAuditComplete": false,
+    "hostHistoryRetentionPrivacyReviewComplete": false
+  },
+  "python": {
+    "pythonVersion": "3.12.13",
+    "packageCount": 8,
+    "requestCount": 17,
+    "failedRequestCount": 0,
+    "packages": [
+      {
+        "name": "pip",
+        "version": "26.2.1",
+        "latestVersion": "26.2.1",
+        "isPypiLatest": true,
+        "osvIds": [],
+        "pypiIds": []
+      },
+      {
+        "name": "mirobody",
+        "version": "1.4.2",
+        "latestVersion": "1.4.2",
+        "isPypiLatest": true,
+        "osvIds": [],
+        "pypiIds": []
+      },
+      {
+        "name": "numpy",
+        "version": "2.5.3",
+        "latestVersion": "2.5.3",
+        "isPypiLatest": true,
+        "osvIds": [],
+        "pypiIds": []
+      },
+      {
+        "name": "pypdfium2",
+        "version": "5.13.0",
+        "latestVersion": "5.13.0",
+        "isPypiLatest": true,
+        "osvIds": [],
+        "pypiIds": []
+      },
+      {
+        "name": "pillow",
+        "version": "12.3.0",
+        "latestVersion": "12.3.0",
+        "isPypiLatest": true,
+        "osvIds": [],
+        "pypiIds": []
+      },
+      {
+        "name": "openpyxl",
+        "version": "3.1.5",
+        "latestVersion": "3.1.5",
+        "isPypiLatest": true,
+        "osvIds": [],
+        "pypiIds": []
+      },
+      {
+        "name": "et-xmlfile",
+        "version": "2.0.0",
+        "latestVersion": "2.0.0",
+        "isPypiLatest": true,
+        "osvIds": [],
+        "pypiIds": []
+      },
+      {
+        "name": "defusedxml",
+        "version": "0.7.1",
+        "latestVersion": "0.7.1",
+        "isPypiLatest": true,
+        "osvIds": [],
+        "pypiIds": []
+      }
+    ]
+  },
+  "blockers": [
+    "EXTERNAL_CPYTHON_AND_EMBEDDED_NATIVE_COMPONENT_AUDIT_INCOMPLETE",
+    "HOST_HISTORY_LOG_MODEL_TRANSMISSION_RETENTION_REVIEW_INCOMPLETE",
+    "EXACT_CANDIDATE_HUMAN_WEB_ACCEPTANCE_PENDING"
+  ],
+  "limitations": [
+    "No real health data is approved",
+    "A clean known-advisory result is not proof of safety",
+    "This run uses scripted approval decisions, not a human Web tester"
+  ]
+}

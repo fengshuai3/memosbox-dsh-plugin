@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "kind": "approvalSimulation",
+  "version": "0.2.0-beta.4",
+  "artifactSha256": "b1ae143719ad44232c0a8390939a4a63ee2e4afb3e624dd0e1d8ed2b7f14acf7",
+  "verifiedAt": "2026-09-15T09:50:54.042Z",
+  "passed": true,
+  "humanPerformed": false,
+  "uiTested": false,
+  "scope": "Synthetic fixture, real host services and installed tarball. Approval answerer and LLM adapter are test fixtures; no remote LLM, full agent loop or interactive UI qualification.",
+  "checks": {
+    "cliAddRemove": true,
+    "loaderBoot": true,
+    "nativeToolExecuteRender": true,
+    "separateProcessReadback": true,
+    "nativeSqliteConsumer": true,
+    "documentToWikiAndMemory": true,
+    "unavailableFailsClosed": true,
+    "ambiguousCandidateBlocked": true,
+    "rejectedWritesByteIdentical": true,
+    "modelTransmissionPreventedWhenDenied": true
+  },
+  "negativeCases": [
+    "read:rejected",
+    "read:cancelled",
+    "transmit:rejected",
+    "transmit:cancelled",
+    "wiki:rejected",
+    "wiki:cancelled",
+    "memory:rejected",
+    "memory:cancelled"
+  ],
+  "remoteModelTested": false,
+  "healthPrivacyQualified": false
+}

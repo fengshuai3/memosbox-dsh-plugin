@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "publicationReady": false,
+  "version": "0.2.0-beta.4",
+  "artifactSha256": "587f9f27ab644b1b846943a183a35e17ffdabcb026476ab263b86e2168743a82",
+  "reviewer": "",
+  "licenseReviewStatus": "deferred-by-user-not-cleared",
+  "previousApproval": "release/history/approval-beta3-before-source-upload-2026-09-15.json",
+  "status": "source-update-authorized-package-release-blocked",
+  "userTestReport": "release/evidence/user-web-test-report-2026-09-15.json",
+  "evidence": {
+    "licenses": null,
+    "security": null,
+    "realDialogue": {
+      "path": "release/evidence/real-dialogue-beta4-2026-09-15.json",
+      "sha256": "cfa415636e439455378ca148e6d80e0aee373b4d82bf209bc5d9d919ebdb1faf",
+      "passed": true
+    },
+    "automaticCapture": {
+      "path": "release/evidence/automatic-capture-beta4-2026-09-15.json",
+      "sha256": "7c316fff9c16b9bf4995b3dc7198d542159703cb7e6b2dbc3be62db80d654e8c",
+      "passed": true
+    },
+    "humanApproval": null,
+    "migrationRollback": {
+      "path": "release/evidence/migration-rollback-0.2.0-beta.4-20260915071540048.json",
+      "sha256": "dac24e62640653137c8d67592fc3249daaa5adb965f99efa7732316b983154c0",
+      "passed": true
+    },
+    "approvalSimulation": {
+      "path": "release/evidence/approval-simulation-beta4-2026-09-15.json",
+      "sha256": "a2bfd10fc36cb7f554d202547af29fb5ed1d4bed13383da0aba4a7e915fdf33e",
+      "passed": true
+    }
+  }
+}

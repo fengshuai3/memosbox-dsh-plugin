@@ -10,6 +10,10 @@ assert(process.argv.includes('--runtime') && process.argv.includes('--artifact')
 const runtime = await realpath(resolve(flag('--runtime')))
 const artifact = await realpath(resolve(flag('--artifact')))
 assert(runtime.startsWith(root + '/') && artifact.startsWith(root + '/'))
+const manifest = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'))
+const packedManifest = JSON.parse(execFileSync('tar', ['-xOf', artifact, 'package/package.json'], { encoding: 'utf8', maxBuffer: 1024 * 1024 }))
+assert.equal(packedManifest.name, manifest.name, 'Unexpected candidate package')
+assert.equal(packedManifest.version, manifest.version, 'Candidate version differs from source')
 const hash = data => createHash('sha256').update(data).digest('hex')
 const lockBytes = await readFile(join(root, 'runtime-locks/darwin-arm64-cp312.json'))
 const lock = JSON.parse(lockBytes)
@@ -42,10 +46,11 @@ for (const url of sources) {
       declaredLicense: url.endsWith('package.json') ? JSON.parse(text).license : undefined })
   } catch { fetched.push({ url, fetched: false, error: 'OFFICIAL_SOURCE_FETCH_FAILED' }) }
 }
-const report = { schemaVersion: 1, kind: 'licenses', version: '0.2.0-beta.2', verifiedAt: new Date().toISOString(), artifactSha256: hash(await readFile(artifact)), passed: false, legalClearance: false,
-  scope: 'Exact npm artifact plus separately provisioned wheels; interpreter not redistributed. File presence is not permission clearance.',
+const report = { schemaVersion: 1, kind: 'licenses', version: packedManifest.version, verifiedAt: new Date().toISOString(), artifactSha256: hash(await readFile(artifact)), passed: false, legalClearance: false,
+  scope: 'Exact plugin tarball plus separately provisioned wheels; interpreter and wheels are not included in the plugin tarball. File presence is not permission clearance.',
   blockers: ['MEMOS_MODULE_MIT_VS_ROOT_APACHE_REQUIRES_RIGHTSHOLDER_CLARIFICATION', 'TERMINOLOGY_LICENSE_CONDITIONS_AND_RECIPIENT_ENTITLEMENT_REVIEW_PENDING', ...wheels.filter(p => !p.licenseFiles.length).map(p => `NO_STANDALONE_LICENSE_IN_WHEEL:${p.name}`)],
   officialSources: fetched, additionalTerms: ['https://loinc.org/license/', 'https://www.nlm.nih.gov/research/umls/license.html', 'https://www.snomed.org/get-snomed'], wheels }
 await mkdir(join(root, 'release/evidence'), { recursive: true })
-await writeFile(join(root, 'release/evidence/licenses-2026-09-15.json'), JSON.stringify(report, null, 2) + '\n')
-console.log(JSON.stringify({ passed: false, artifactSha256: report.artifactSha256, wheelsVerified: wheels.length, licenseFiles: wheels.reduce((n, p) => n + p.licenseFiles.length, 0), blockers: report.blockers }))
+const reportPath = join(root, 'release/evidence', `licenses-${report.version}-${report.verifiedAt.replaceAll(/[^0-9]/g, '')}.json`)
+await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' })
+console.log(JSON.stringify({ report: reportPath, passed: false, artifactSha256: report.artifactSha256, wheelsVerified: wheels.length, licenseFiles: wheels.reduce((n, p) => n + p.licenseFiles.length, 0), blockers: report.blockers }))

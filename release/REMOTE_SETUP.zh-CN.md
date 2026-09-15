@@ -1,5 +1,7 @@
 # Git 仓库配置后的远程验收
 
+维护者已选择 Gitee 附件下载方式，不发布 npm 包。当前操作以 [Gitee 下载包发行](GITEE_RELEASE.zh-CN.md) 为准；下述 GitHub/npm 配置是保留的可选方案，不是本次发行前置条件。
+
 这是尚待仓库所有者执行/授权的配置，不是远程已验收的证明。
 
 当前源码主仓库为 Gitee：本页以下 GitHub Actions、环境保护及 npm GitHub Trusted Publisher 步骤仅适用于未来 GitHub 镜像，不会因推送 Gitee 自动生效。Gitee 流水线尚未配置；不能把仓库上传或本地验证算作远程运行成功。

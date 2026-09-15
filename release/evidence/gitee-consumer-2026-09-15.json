@@ -1,0 +1,26 @@
+{
+  "verifiedAt": "2026-09-15T09:49:43.516Z",
+  "artifact": "memosbox-dsh-plugin-0.2.0-beta.4.tgz",
+  "sha256": "b1ae143719ad44232c0a8390939a4a63ee2e4afb3e624dd0e1d8ed2b7f14acf7",
+  "filesVerified": 292,
+  "consumerVersions": {
+    "better-sqlite3": "12.11.1",
+    "@sinclair/typebox": "0.34.52",
+    "ini": "1.3.8",
+    "uuid": "14.0.2",
+    "yaml": "2.9.0"
+  },
+  "audit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "memoryStatus": "approved-selected-runtime-closure",
+  "nativeExecutionVerified": false,
+  "publicReleaseApproved": false,
+  "licenseStatus": "upstream-MIT-metadata-versus-repository-Apache-2.0-needs-clarification",
+  "note": "Artifact equality, source provenance, safe consumer resolution and zero production advisories verified. Native execution and license clearance are separate gates."
+}

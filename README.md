@@ -4,11 +4,11 @@
 
 memOSbox 将 MemOS 记忆、Markdown Wiki 和 Mirobody 指标/文档处理组合为一个 DeepSeek Harness 原生 bundle，由 DSH 统一安装、加载、调用和卸载。不依赖旧版 HTTP 服务、MCP 服务或常驻 Python 守护进程；DSH 对话模型本身仍可使用远程 API。
 
-**当前为 0.2.0-beta.4 开发源码，未发布 npm 版本，未完成生产验收，也不表示已被插件市场收录。仅使用合成测试数据，不处理真实患者资料。**
+**当前为 0.2.0-beta.4 开发源码，正在准备 Gitee 发行版下载包，不提供 npm 注册表安装方式。安装包尚未公开发行，未完成生产验收，也不表示已被插件市场收录。仅使用合成测试数据，不处理真实患者资料。**
 
 维护者：冯帅 · [714205152@qq.com](mailto:714205152@qq.com)
 
-源码：[Gitee 仓库](https://gitee.com/guandalaifu/memosbox-dsh-plugin) · [问题反馈](https://gitee.com/guandalaifu/memosbox-dsh-plugin/issues)
+源码：[Gitee 仓库](https://gitee.com/feng315/tomorrow) · [问题反馈](https://gitee.com/feng315/tomorrow/issues)
 
 ## 能做什么
 
@@ -27,12 +27,20 @@ memOSbox 将 MemOS 记忆、Markdown Wiki 和 Mirobody 指标/文档处理组合
 - Mirobody 目前仅验证 **macOS arm64 + CPython 3.12**，Python 需由使用者另行准备；其他平台不能视为完整支持。
 - DSH 的模型与凭据由 DSH 自身管理，不写入本仓库或插件配置。
 
+## Gitee 下载包安装（待发行）
+
+计划通过 [Gitee Releases](https://gitee.com/feng315/tomorrow/releases) 提供已构建的 `.tgz` 插件包及 `SHA256SUMS`。仅下载通过发布检查的正式附件；Gitee 自动生成的源码 ZIP 不含 `dist`，不能代替插件包。
+
+将安装包、校验文件和私有运行环境放在统一的 memosbox 目录内，核对 SHA-256 后，使用下方 `dsh plugin ... add -w <绝对路径>` 命令安装。不要按 npm 包名安装，也不要假定仓库 Git URL 是可用的构建产物。
+
+不发布到 npm 不等于完全离线：DSH 的包管理器仍可能下载 Node 依赖；Mirobody 的 Python 环境仍需显式准备。下载包不附带个人 API Key、会话数据库、Python 解释器或 wheel 缓存。
+
 ## 从源码构建并安装
 
 以下是开发测试安装，不是已公开发行的 npm 包安装。先克隆源码，在本仓库内保留生成文件：
 
 ```sh
-git clone https://gitee.com/guandalaifu/memosbox-dsh-plugin.git
+git clone https://gitee.com/feng315/tomorrow.git memosbox-dsh-plugin
 cd memosbox-dsh-plugin
 corepack pnpm install --frozen-lockfile --registry=https://registry.npmjs.org
 corepack pnpm run verify
@@ -89,6 +97,6 @@ corepack pnpm run release:source-check
 
 ## 许可与贡献
 
-本项目自有代码声明 Apache-2.0；第三方内容保留原版权及声明。MemOS 上游 npm 元数据与仓库许可的适用范围仍待澄清，相关核对已暂停，不宣称整体再分发授权已确认。Mirobody、LOINC 及其他依赖各自的条件不能由本项目许可证覆盖。详见 [NOTICE](NOTICE)、[SECURITY](SECURITY.md) 和[发布说明](release/README.zh-CN.md)。
+本项目自有代码声明 Apache-2.0；第三方内容保留原版权及声明。MemOS 上游 npm 元数据与仓库许可的适用范围仍待澄清，相关核对已恢复，不宣称整体再分发授权已确认。Mirobody、LOINC 及其他依赖各自的条件不能由本项目许可证覆盖。详见 [NOTICE](NOTICE)、[SECURITY](SECURITY.md) 和[发布说明](release/README.zh-CN.md)。
 
 欢迎通过 Gitee 提交不含敏感数据的 Issue 或 Pull Request。安全问题请私发维护者邮箱，不要公开密钥、患者资料或可直接利用的攻击载荷。开发规范见 [CONTRIBUTING](CONTRIBUTING.md)。

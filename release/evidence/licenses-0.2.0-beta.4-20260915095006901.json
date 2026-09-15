@@ -1,0 +1,630 @@
+{
+  "schemaVersion": 1,
+  "kind": "licenses",
+  "version": "0.2.0-beta.4",
+  "verifiedAt": "2026-09-15T09:50:06.901Z",
+  "artifactSha256": "b1ae143719ad44232c0a8390939a4a63ee2e4afb3e624dd0e1d8ed2b7f14acf7",
+  "passed": false,
+  "legalClearance": false,
+  "scope": "Exact plugin tarball plus separately provisioned wheels; interpreter and wheels are not included in the plugin tarball. File presence is not permission clearance.",
+  "blockers": [
+    "MEMOS_MODULE_MIT_VS_ROOT_APACHE_REQUIRES_RIGHTSHOLDER_CLARIFICATION",
+    "TERMINOLOGY_LICENSE_CONDITIONS_AND_RECIPIENT_ENTITLEMENT_REVIEW_PENDING"
+  ],
+  "officialSources": [
+    {
+      "url": "https://raw.githubusercontent.com/MemTensor/MemOS/ec8b7d956ccf3fc29345fdb3d82b5f3817578d62/LICENSE",
+      "sha256": "154f9be8df2d55ceddcd4646c8d8d4206d48867ae1da2b81ce2ab86b51a5f075",
+      "fetched": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MemTensor/MemOS/ec8b7d956ccf3fc29345fdb3d82b5f3817578d62/apps/memos-local-plugin/package.json",
+      "sha256": "3f4544953b747b97cf09ad9dc0b0ae1bbeafcc42c450716b0c4268f795dd6395",
+      "fetched": true,
+      "declaredLicense": "MIT"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/thetahealth/mirobody/1.4.2/LICENSE-3RD-PARTY",
+      "sha256": "84cf0d6e94f64916c1a253aa6e54f810c3c5ea222cf632ab751ae1ba202eaef8",
+      "fetched": true
+    }
+  ],
+  "additionalTerms": [
+    "https://loinc.org/license/",
+    "https://www.nlm.nih.gov/research/umls/license.html",
+    "https://www.snomed.org/get-snomed"
+  ],
+  "wheels": [
+    {
+      "name": "pip",
+      "version": "26.2.1",
+      "sha256": "71138adf1f4ca900cdb7d289c21b7494329f2332b6d85f0e1c42108c0384ed3e",
+      "licenseFiles": [
+        {
+          "path": "pip/_vendor/cachecontrol/LICENSE.txt",
+          "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b"
+        },
+        {
+          "path": "pip/_vendor/certifi/LICENSE",
+          "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7"
+        },
+        {
+          "path": "pip/_vendor/distlib/LICENSE.txt",
+          "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d"
+        },
+        {
+          "path": "pip/_vendor/distro/LICENSE",
+          "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+        },
+        {
+          "path": "pip/_vendor/idna/LICENSE.md",
+          "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04"
+        },
+        {
+          "path": "pip/_vendor/msgpack/COPYING",
+          "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427"
+        },
+        {
+          "path": "pip/_vendor/packaging/LICENSE",
+          "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+        },
+        {
+          "path": "pip/_vendor/packaging/LICENSE.APACHE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "pip/_vendor/packaging/LICENSE.BSD",
+          "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+        },
+        {
+          "path": "pip/_vendor/packaging/licenses/__init__.py",
+          "sha256": "fc9c745d1883ff9f296a5b169f22eb2ee879f59a4608f20f5cb29d668f4e26f4"
+        },
+        {
+          "path": "pip/_vendor/packaging/licenses/_spdx.py",
+          "sha256": "596ec35e2ca0ebcba9fd8343ff0a51625af548786257815f24b41f7e08613314"
+        },
+        {
+          "path": "pip/_vendor/pkg_resources/LICENSE",
+          "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        },
+        {
+          "path": "pip/_vendor/platformdirs/LICENSE",
+          "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+        },
+        {
+          "path": "pip/_vendor/pygments/LICENSE",
+          "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17"
+        },
+        {
+          "path": "pip/_vendor/pyproject_hooks/LICENSE",
+          "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154"
+        },
+        {
+          "path": "pip/_vendor/requests/LICENSE",
+          "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+        },
+        {
+          "path": "pip/_vendor/resolvelib/LICENSE",
+          "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d"
+        },
+        {
+          "path": "pip/_vendor/rich/LICENSE",
+          "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15"
+        },
+        {
+          "path": "pip/_vendor/tomli/LICENSE",
+          "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+        },
+        {
+          "path": "pip/_vendor/tomli_w/LICENSE",
+          "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+        },
+        {
+          "path": "pip/_vendor/truststore/LICENSE",
+          "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca"
+        },
+        {
+          "path": "pip/_vendor/urllib3/LICENSE.txt",
+          "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/AUTHORS.txt",
+          "sha256": "4eb1fb1705e2def898e81bcba19c3aac80620d27ba3569d6a6df7b4629d1b5c2"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/LICENSE.txt",
+          "sha256": "634300a669d49aeae65b12c6c48c924c51a4cdf3d1ff086dc3456dc8bcaa2104"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/cachecontrol/LICENSE.txt",
+          "sha256": "86eeee87be2a43f3ff1f56496f451f69243926f025fedbb033666c304c4c161b"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/certifi/LICENSE",
+          "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/distlib/LICENSE.txt",
+          "sha256": "808e10c8a6ab8deb149ff9b3fb19f447a808094606d712a9ca57fead3552599d"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/distro/LICENSE",
+          "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
+          "sha256": "1a9a4f0e3d479a27240ddd59a9137a66ab4a0f9dfdc8ca6188cc0bfd85187f04"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/msgpack/COPYING",
+          "sha256": "492dedba85da5872f78e6091bcd1fea474d660d35acb4dee964b8aab3f007427"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE",
+          "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.APACHE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/packaging/LICENSE.BSD",
+          "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/pkg_resources/LICENSE",
+          "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/platformdirs/LICENSE",
+          "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/pygments/LICENSE",
+          "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/pyproject_hooks/LICENSE",
+          "sha256": "1b22b049b5267d6dfc23a67bf4a84d8ec04b9fdfb1a51d360e42b4342c8b4154"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/requests/LICENSE",
+          "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/resolvelib/LICENSE",
+          "sha256": "f388fd38cad13112c1dc0f669bbe80e7f84541edbafb72f3030d2ca7642c3c9d"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/rich/LICENSE",
+          "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli/LICENSE",
+          "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/tomli_w/LICENSE",
+          "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/truststore/LICENSE",
+          "sha256": "33be7b7e8fa4fd19b1760e1a8ed8a668bdab852c91b692dd41424bcb725a9fca"
+        },
+        {
+          "path": "pip-26.2.1.dist-info/licenses/src/pip/_vendor/urllib3/LICENSE.txt",
+          "sha256": "130e3a64d5fdd5d096a752694634a7d9df284469de86e5732100268041e3d686"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "pip-26.2.1.dist-info/METADATA",
+          "sha256": "3a561005822841f2c45f442f6c7a7505172c8c376c9fe274d876c8ac912968cb",
+          "licenseHeaders": [
+            "License-Expression: MIT",
+            "License-File: AUTHORS.txt",
+            "License-File: LICENSE.txt",
+            "License-File: src/pip/_vendor/cachecontrol/LICENSE.txt",
+            "License-File: src/pip/_vendor/certifi/LICENSE",
+            "License-File: src/pip/_vendor/distlib/LICENSE.txt",
+            "License-File: src/pip/_vendor/distro/LICENSE",
+            "License-File: src/pip/_vendor/idna/LICENSE.md",
+            "License-File: src/pip/_vendor/msgpack/COPYING",
+            "License-File: src/pip/_vendor/packaging/LICENSE",
+            "License-File: src/pip/_vendor/packaging/LICENSE.APACHE",
+            "License-File: src/pip/_vendor/packaging/LICENSE.BSD",
+            "License-File: src/pip/_vendor/pkg_resources/LICENSE",
+            "License-File: src/pip/_vendor/platformdirs/LICENSE",
+            "License-File: src/pip/_vendor/pygments/LICENSE",
+            "License-File: src/pip/_vendor/pyproject_hooks/LICENSE",
+            "License-File: src/pip/_vendor/requests/LICENSE",
+            "License-File: src/pip/_vendor/resolvelib/LICENSE",
+            "License-File: src/pip/_vendor/rich/LICENSE",
+            "License-File: src/pip/_vendor/tomli/LICENSE",
+            "License-File: src/pip/_vendor/tomli_w/LICENSE",
+            "License-File: src/pip/_vendor/truststore/LICENSE",
+            "License-File: src/pip/_vendor/urllib3/LICENSE.txt"
+          ]
+        }
+      ],
+      "terminologyResources": []
+    },
+    {
+      "name": "mirobody",
+      "version": "1.4.2",
+      "sha256": "7a075c7708dbc3995132cb6a40bebcb09ff59c268c9a99ac8bd4ddcfe7993997",
+      "licenseFiles": [
+        {
+          "path": "mirobody/res/fhir_snomed_ct_bundle.NOTICE",
+          "sha256": "bb1ef2ea9ceaf81f4131e7c36dc5b20f12798a432c4221561ffde7c2e3a51704"
+        },
+        {
+          "path": "mirobody/res/fhir_loinc_bundle.NOTICE",
+          "sha256": "d2bc6d84bd2881f0e244e11acd203d06c6e2cc3dc4524c480395d1f1c9b3f99f"
+        },
+        {
+          "path": "mirobody-1.4.2.dist-info/licenses/LICENSE",
+          "sha256": "4d5a2b0aae895f2ac27ae1cdbf0b749f09a5d668b0f23bd1b98f0a0c4a6d9399"
+        },
+        {
+          "path": "mirobody-1.4.2.dist-info/licenses/LICENSE-3RD-PARTY",
+          "sha256": "84cf0d6e94f64916c1a253aa6e54f810c3c5ea222cf632ab751ae1ba202eaef8"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "mirobody-1.4.2.dist-info/METADATA",
+          "sha256": "ba3233c23a59590db6141c4840fa39127f32e84f3db6a21cb824332985720064",
+          "licenseHeaders": [
+            "Classifier: License :: OSI Approved :: Apache Software License",
+            "License-File: LICENSE",
+            "License-File: LICENSE-3RD-PARTY"
+          ]
+        }
+      ],
+      "terminologyResources": [
+        "mirobody/res/dose_forms.tsv",
+        "mirobody/res/EXTERNAL.tsv",
+        "mirobody/res/fhir_snomed_ct_bundle.NOTICE",
+        "mirobody/res/fhir_loinc_bundle.tar.gz",
+        "mirobody/res/fhir_loinc_bundle.NOTICE",
+        "mirobody/res/metrics.tsv",
+        "mirobody/res/recall_synonyms.tsv",
+        "mirobody/res/resolver_overrides.tsv",
+        "mirobody/res/crosswalks/open_wearables.tsv",
+        "mirobody/res/aliases_src/ru.tsv",
+        "mirobody/res/aliases_src/fr.tsv",
+        "mirobody/res/aliases_src/zh_curated.tsv",
+        "mirobody/res/aliases_src/zh.tsv",
+        "mirobody/res/aliases_src/de.tsv",
+        "mirobody/res/aliases_src/ko.tsv",
+        "mirobody/res/aliases_src/es.tsv",
+        "mirobody/res/aliases_src/ja.tsv",
+        "mirobody/res/labels/zh.tsv"
+      ]
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3",
+      "sha256": "f59a878c33d6b88122d80d239bb3b845d58708750b0cb06a09aebb9b18ec696c",
+      "licenseFiles": [
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+          "sha256": "649a589ab31076e79e9ce62ba24eae9959598124176640dbc95f87bd10f34fcf"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+          "sha256": "a14cc25e10d40a3aa705b7de2fb764a6535d8ee9b2db4e1724900585457dfd55"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+          "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+          "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+          "sha256": "211e7d737d6179a08f791ebb0a99897ce7cd2457410c542876d125576edfe910"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+          "sha256": "e340270d4f64384569a91d546acb5b094d69ce47f0c015db77abb74dc6f815af"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+          "sha256": "f7b14309e5f54e5022b26448eefd419988ada2aec01d3c1162d84a0ea8f21f2c"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+          "sha256": "3f2c1ffa76383a55ae0aac01c9737cd70050dff63e1f026694fbe9d662573c98"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+          "sha256": "c17011467b4fe6e20fbfbeda4df09e58c2bca5480a063e55735a4000a379aad9"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+          "sha256": "a85ca13fdf90160b64a0698215868c13b74d835ad0a4e2ba44713b8c5058a056"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+          "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+          "sha256": "0e111337b25494a773106695f0e799f642b8567aaacca4f116a74a8177179156"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+          "sha256": "9d4098846018319cd68e228ee6220361787f73bccbf00237a85e4fc9621b998f"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+          "sha256": "e7d4f4fb20358f314210a892ae17351e04993813646f697ec387385ca2a36918"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+          "sha256": "6f5828a57223d4cc7f8ea505a2623e7b978b242752c1515e355f46ba2cec1800"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+          "sha256": "268b0ca06759d31ea3ca68dd35f20e877916e927b1c2a835e4592a3c4354b1f9"
+        },
+        {
+          "path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+          "sha256": "469778be8f33d54e1bcaab28c281cc472916d2d273f835e55bc487d30503face"
+        },
+        {
+          "path": "numpy/ma/LICENSE",
+          "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6"
+        },
+        {
+          "path": "numpy/_core/include/numpy/random/LICENSE.txt",
+          "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec"
+        },
+        {
+          "path": "numpy/random/LICENSE.md",
+          "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "numpy-2.5.3.dist-info/METADATA",
+          "sha256": "451a9b8028000588e66b0b415587b6aef0bbc51a96d8e8a0cba0dc23acf64f99",
+          "licenseHeaders": [
+            "License-Expression: BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+            "License-File: LICENSE.txt",
+            "License-File: numpy/_core/include/numpy/libdivide/LICENSE.txt",
+            "License-File: numpy/_core/src/common/pythoncapi-compat/COPYING",
+            "License-File: numpy/_core/src/highway/LICENSE",
+            "License-File: numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+            "License-File: numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+            "License-File: numpy/_core/src/umath/svml/LICENSE",
+            "License-File: numpy/fft/pocketfft/LICENSE.md",
+            "License-File: numpy/linalg/lapack_lite/LICENSE.txt",
+            "License-File: numpy/ma/LICENSE",
+            "License-File: numpy/random/LICENSE.md",
+            "License-File: numpy/random/src/distributions/LICENSE.md",
+            "License-File: numpy/random/src/mt19937/LICENSE.md",
+            "License-File: numpy/random/src/pcg64/LICENSE.md",
+            "License-File: numpy/random/src/philox/LICENSE.md",
+            "License-File: numpy/random/src/sfc64/LICENSE.md",
+            "License-File: numpy/random/src/splitmix64/LICENSE.md"
+          ]
+        }
+      ],
+      "terminologyResources": []
+    },
+    {
+      "name": "pypdfium2",
+      "version": "5.13.0",
+      "sha256": "da5c7b74eebf40b5c1fbe1de01aa1edc8827a79fb1efd999616bc20dcaf77ba4",
+      "licenseFiles": [
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/LICENSES/Apache-2.0.txt",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/LICENSES/BSD-3-Clause.txt",
+          "sha256": "a6d11f0694c0137e9b02924b9d33a159f6c72f220fa4655bb2e1ea3654377d39"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/LICENSES/CC-BY-4.0.txt",
+          "sha256": "419896aea50c15d6e40c5b4baf4bd346f78223b9a354c7357ad00262afdc08ec"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/abseil.txt",
+          "sha256": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/agg23.txt",
+          "sha256": "c110d3ea2ad77467ce0dcff7d3337e6c8be8049a5103f4b9bd5fd911a77972e5"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/fast_float.txt",
+          "sha256": "e562f3f974ced7e69dd1db77b820b36bcf8f30377f1aa105723fba449c53c4e6"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/freetype.txt",
+          "sha256": "f4b133e25df1f86ad3ffea453aa0e613f0474f34778dbbb3e437e7b2724937d8"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/icu.txt",
+          "sha256": "e55522d81edc687a341a4411e0776e54ca654e90147f354a90458aaced4116af"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/lcms.txt",
+          "sha256": "7312b68c5b25e9bf2b828706fb4e29588f22705112f411fd42e1f7d84c3d139a"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/libjpeg_turbo.ijg",
+          "sha256": "75815e3bf6484201a3c3d17a1bbf10f2e8e3237f84df10a2357ea896db2a81d6"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/libjpeg_turbo.md",
+          "sha256": "96f5b328adbb78eeaaec6980d73fd558cb1e4d62560ed615646bc3cf5e532430"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/libopenjpeg.txt",
+          "sha256": "c5ab0890a737c2dfa7ba675036554f6d17741d98629b0c2a145354d00617e6b2"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/libpng.txt",
+          "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/libtiff.txt",
+          "sha256": "92b72ba97e6c2749c2a94bc0ef646b47080217f1e772a482b33cf5a5f98a6506"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/llvm-libc.txt",
+          "sha256": "ebcd9bbf783a73d05c53ba4d586b8d5813dcdf3bbec50265860ccc885e606f47"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/pdfium-binaries.txt",
+          "sha256": "ba26c1263131696b86c10496b5066b918a20b7161822a80c274d0080105f6c93"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/pdfium.txt",
+          "sha256": "1fe9dea718fbd75cf149adaf4d8a22a4335604d964ddb76d1b45383dec8668c9"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/simdutf.txt",
+          "sha256": "fc8dbc04e03ad4efc08a647ffe7f995b811a95bc04c0e85a56d5277c6593fa5f"
+        },
+        {
+          "path": "pypdfium2-5.13.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/zlib.txt",
+          "sha256": "33fd641c9f3b0e0be64bc78fea9e94807674cdd70c48477599226cb8956565fe"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "pypdfium2-5.13.0.dist-info/METADATA",
+          "sha256": "1baf911a529efd4c9d5778cd6fd71ca62eb5e3cf0ef3a5d87a71c4fe9805b389",
+          "licenseHeaders": [
+            "License: BSD-3-Clause, Apache-2.0, dependency licenses",
+            "License-File: LICENSES/Apache-2.0.txt",
+            "License-File: LICENSES/BSD-3-Clause.txt",
+            "License-File: LICENSES/CC-BY-4.0.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/abseil.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/agg23.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/fast_float.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/freetype.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/icu.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/lcms.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/libjpeg_turbo.ijg",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/libjpeg_turbo.md",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/libopenjpeg.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/libpng.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/libtiff.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/llvm-libc.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/pdfium-binaries.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/pdfium.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/simdutf.txt",
+            "License-File: data/darwin_arm64/BUILD_LICENSES/zlib.txt"
+          ]
+        }
+      ],
+      "terminologyResources": []
+    },
+    {
+      "name": "Pillow",
+      "version": "12.3.0",
+      "sha256": "ffd0c5368496f41b0944be820fcb7a838aa6e623d250b01acf2643939c3f99d7",
+      "licenseFiles": [
+        {
+          "path": "pillow-12.3.0.dist-info/licenses/LICENSE",
+          "sha256": "dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "pillow-12.3.0.dist-info/METADATA",
+          "sha256": "8fc07146cab33ef7582361dab6eac596d340b03ec648f18217da7894f73838c8",
+          "licenseHeaders": [
+            "License-Expression: MIT-CMU",
+            "License-File: LICENSE"
+          ]
+        }
+      ],
+      "terminologyResources": []
+    },
+    {
+      "name": "openpyxl",
+      "version": "3.1.5",
+      "sha256": "5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2",
+      "licenseFiles": [
+        {
+          "path": "openpyxl-3.1.5.dist-info/LICENCE.rst",
+          "sha256": "0c84bb42f5d367e5ebf9fc2dde35b16141df5ee0fdc189250858bc6c5560f69e"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "openpyxl-3.1.5.dist-info/METADATA",
+          "sha256": "23f80ca9830dd89435da1710f26deda8f81e5409287e74540210c72627a4ad96",
+          "licenseHeaders": [
+            "License: MIT",
+            "Classifier: License :: OSI Approved :: MIT License",
+            "License-File: LICENCE.rst"
+          ]
+        }
+      ],
+      "terminologyResources": []
+    },
+    {
+      "name": "et-xmlfile",
+      "version": "2.0.0",
+      "sha256": "7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa",
+      "licenseFiles": [
+        {
+          "path": "et_xmlfile-2.0.0.dist-info/LICENCE.python",
+          "sha256": "4ccdaaebc0f44b83720ec0399bb7ab329adce067dd62f73c5535a2dc05628ab2"
+        },
+        {
+          "path": "et_xmlfile-2.0.0.dist-info/LICENCE.rst",
+          "sha256": "0c84bb42f5d367e5ebf9fc2dde35b16141df5ee0fdc189250858bc6c5560f69e"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "et_xmlfile-2.0.0.dist-info/METADATA",
+          "sha256": "0e97d7ea909ed0fbe03d88bc8b6f58677cee1b07bd3353ce361cd2405915204e",
+          "licenseHeaders": [
+            "License: MIT",
+            "Classifier: License :: OSI Approved :: MIT License",
+            "License-File: LICENCE.python",
+            "License-File: LICENCE.rst",
+            "License-File: AUTHORS.txt"
+          ]
+        }
+      ],
+      "terminologyResources": []
+    },
+    {
+      "name": "defusedxml",
+      "version": "0.7.1",
+      "sha256": "a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61",
+      "licenseFiles": [
+        {
+          "path": "defusedxml-0.7.1.dist-info/LICENSE",
+          "sha256": "b80ce9da8c42a1f91079627fbbe2bf27210ae108a0ffe5f077d5b08e076c24c8"
+        }
+      ],
+      "metadata": [
+        {
+          "path": "defusedxml-0.7.1.dist-info/METADATA",
+          "sha256": "369d3cef64870daf849fba711cb8d05a7efe3c8d9ab0f763adc34079fe378bb1",
+          "licenseHeaders": [
+            "License: PSFL",
+            "Classifier: License :: OSI Approved :: Python Software Foundation License"
+          ]
+        }
+      ],
+      "terminologyResources": []
+    }
+  ]
+}

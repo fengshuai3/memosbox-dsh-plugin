@@ -35,9 +35,9 @@ node scripts/provision-runtime.mjs --python /absolute/path/to/python3.12 \
 
 `--download` fetches locked, hash-verified wheels. Omit it to prepare from an existing wheelhouse offline. Tool calls never install dependencies. Set `mirobodyRuntimePath` to this root. The venv is private; system Python is not modified.
 
-Install only the tested tarball into a disposable DSH profile before considering a live upgrade. The package has not been published to npm. See [source build and installation](README.md#从源码构建并安装) and [runtime/configuration](docs/RUNTIME_GUIDE.zh-CN.md).
+Distribution is planned through [Gitee Releases](https://gitee.com/feng315/tomorrow/releases), using a built `.tgz` and `SHA256SUMS`, not an npm registry package. No release attachment is available from this preparation step. Verify the checksum and install the local tarball into a disposable DSH profile before considering a live upgrade. The automatically generated source ZIP is not an installable bundle. Node dependencies may still require network access; CPython and Mirobody provisioning remain separate. No personal keys or runtime databases are included. See [source build and installation](README.md#从源码构建并安装) and [runtime/configuration](docs/RUNTIME_GUIDE.zh-CN.md).
 
-Maintainer: 冯帅 <714205152@qq.com>. Source: https://gitee.com/guandalaifu/memosbox-dsh-plugin . This source upload is not an npm release or a marketplace listing. GitHub Actions files are templates for a future GitHub mirror; uploading them to Gitee does not run GitHub Actions.
+Maintainer: 冯帅 <714205152@qq.com>. Source: https://gitee.com/feng315/tomorrow . This source upload is not an artifact release or a marketplace listing. GitHub Actions files are optional templates; uploading them to Gitee does not run GitHub Actions. An npm account or GitHub mirror is not required for the selected Gitee attachment distribution channel.
 
 ## Tools
 
