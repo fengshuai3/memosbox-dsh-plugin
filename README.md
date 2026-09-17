@@ -10,6 +10,8 @@ memOSbox 将 MemOS 记忆、Markdown Wiki 和 Mirobody 指标/文档处理组合
 
 源码：[Gitee 仓库](https://gitee.com/feng315/tomorrow) · [问题反馈](https://gitee.com/feng315/tomorrow/issues)
 
+GitHub：[公开源码与社区发现](https://github.com/fengshuai3/memosbox-dsh-plugin)。`dsh-plugin` Topic 不代表官方认证或安装包已发行；GitHub Release 的非 npm 发行流程见[发行指南](release/GITHUB_RELEASE.zh-CN.md)，未通过审批前不会上传发行附件。
+
 ## 能做什么
 
 | 组件 | 当前功能 | 限制 |
