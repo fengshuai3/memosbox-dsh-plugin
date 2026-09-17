@@ -1,0 +1,6 @@
+# Keep source scripts and JSON consistent on Windows checkouts.
+* text=auto eol=lf
+
+# These files are byte-locked upstream inputs/outputs, not editable source.
+/runtime-locks/memos-repository-LICENSE -text
+/vendor/memos-core/** -text
