@@ -33,12 +33,14 @@ async function runtime() {
 
 describe('new-process crash recovery', () => {
   it.each(['intent', 'page', 'index', 'log', 'receipt'])('recovers a process that exited immediately after %s fsync', async stage => {
-    const { compiled, root } = await runtime()
+    const { parent, compiled, root } = await runtime()
+    const crashMarker = join(parent, 'crash-marker')
     const adapterUrl = pathToFileURL(join(compiled, 'adapter.js')).href
     const storeUrl = pathToFileURL(join(compiled, 'file-store.js')).href
     const options = { root, autoInitialize: true, maxPageBytes: 8192 }
     const input = { operationId: 'process-crash', path: 'concepts/crash.md', body: 'PROCESS_RESTART_CANARY [[memos]] [[wiki]].', expectedVersion: 'absent' }
     const producer = `
+      import {writeFileSync} from 'node:fs';
       import {WikiAdapter} from ${JSON.stringify(adapterUrl)};
       import {WikiFileStore} from ${JSON.stringify(storeUrl)};
       const original = WikiFileStore.prototype.write;
@@ -47,15 +49,27 @@ describe('new-process crash recovery', () => {
         const stage = ${JSON.stringify(stage)};
         if ((stage === 'intent' && path.includes('/pending/')) || (stage === 'page' && path === 'concepts/crash.md') ||
             (stage === 'index' && path === 'index.md') || (stage === 'log' && path === 'log.md') ||
-            (stage === 'receipt' && path.includes('/receipts/'))) process.kill(process.pid, 'SIGKILL');
+            (stage === 'receipt' && path.includes('/receipts/'))) {
+          writeFileSync(${JSON.stringify(crashMarker)}, stage);
+          process.kill(process.pid, 'SIGKILL');
+          process.exit(99); // Fail the parent assertion if forced termination ever returns.
+        }
       };
       const adapter = new WikiAdapter(${JSON.stringify(options)});
       await adapter.initialize();
       await adapter.writePage(${JSON.stringify(input)});
     `
     const crashed = spawnSync(process.execPath, ['--input-type=module', '-e', producer], { encoding: 'utf8', timeout: 10_000 })
+    expect(crashed.error).toBeUndefined()
     expect(crashed.stderr).toBe('')
-    expect(crashed.signal).toBe('SIGKILL')
+    expect(await readFile(crashMarker, 'utf8')).toBe(stage)
+    if (process.platform === 'win32') {
+      // Windows reports forced termination as a nonzero exit, not a POSIX signal.
+      expect(crashed.signal).toBeNull()
+      expect(crashed.status).toBeTypeOf('number')
+      expect(crashed.status).toBeGreaterThan(0)
+      expect(crashed.status).not.toBe(99)
+    } else expect(crashed.signal).toBe('SIGKILL')
     // Simulate expiration rather than waiting thirty seconds for the dead process's lease.
     const expired = new Date(Date.now() - 60_000)
     await utimes(`${root}.lock`, expired, expired)

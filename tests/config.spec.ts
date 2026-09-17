@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { answerGuidance, defaultWikiPath, wikiGuidance } from '../src/index.js'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 
 describe('plugin configuration', () => {
   it('places default Wiki state under DSH_HOME', () => {
@@ -8,7 +8,8 @@ describe('plugin configuration', () => {
   })
 
   it('expands a tilde only at the beginning of an explicit path', () => {
-    expect(defaultWikiPath('~/knowledge/wiki', {}, '/tmp/user')).toBe(join('/tmp/user', 'knowledge', 'wiki'))
+    const userHome = resolve('/tmp/user')
+    expect(defaultWikiPath('~/knowledge/wiki', {}, userHome)).toBe(join(userHome, 'knowledge', 'wiki'))
   })
 
   it('states memory, Wiki, and runtime boundaries in the model guidance', () => {
